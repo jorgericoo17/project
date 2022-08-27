@@ -1,4 +1,4 @@
-﻿package com.software.ascontroller.status.repositories;
+package com.software.ascontroller.status.repositories;
 
 import com.software.ascontroller.status.entities.Status;
 import org.springframework.data.jpa.repository.JpaRepository;

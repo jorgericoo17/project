@@ -1,9 +1,8 @@
-﻿package com.software.ascontroller.vehicles.newVehicle.controllers;
+package com.software.ascontroller.vehicles.newVehicle.controllers;
 
 import com.software.ascontroller.language.LanguageEnum;
 import com.software.ascontroller.model.services.ModelService;
 import com.software.ascontroller.status.entities.Status;
-import com.software.ascontroller.status.enums.StatusEnum;
 import com.software.ascontroller.status.services.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ public class NewVehicleController {
     @Autowired
     private StatusService statusService;
 
-    @GetMapping
+    @GetMapping("/list")
     public String newVehicleList(Model model) {
         this.loadNewVehicleListScreen(model);
         return "/vehicles/newVehicle/newVehicleList";
