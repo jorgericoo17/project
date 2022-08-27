@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{configuration.users.title}"></title>
+    <div th:include="/common/libraries-fragment"></div>
+    <link rel="stylesheet" type="text/css" href="/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
+    <link rel="stylesheet" type="text/css" href="/css/common/dataTable.css">
+</head>
+<body>
+<div th:include="/common/asideMenu-fragment"></div>
+
+<main id="main">
+    <div class="container-fuild main-content">
+        <fieldset>
+            <legend th:text="#{user.list.legend}"></legend>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
+
+                    <div th:include="/common/alertMessages-fragment"></div>
+
+                    <form th:action="@{/configuration/users/search}" th:object="${userFilter}" method="get" id="form-search">
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="username" th:text="#{user.list.login}"></label>
+                                <input type="text" class="form-control" th:field="*{username}" th:placeholder="#{user.list.login.placeholder}">
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="name" th:text="#{user.list.name}"> </label>
+                                <input type="text" class="form-control" th:field="*{name}" th:placeholder="#{user.list.name.placeholder}">
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="lastName" th:text="#{user.list.lastName}"></label>
+                                <input type="text" class="form-control" th:field="*{lastName}" th:placeholder="#{user.list.lastName.placeholder}">
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="idRole" th:text="#{user.list.role}"></label>
+                                <select class="form-control" th:field="*{idRole}">
+                                    <option value="" selected th:text="#{select.option.default}"></option>
+                                    <option th:each="row : ${roles}" th:value="${row.idRole}" th:text="${row.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pull-right mt-4">
+                            <a th:href="@{/configuration/users/add}" class="btn btn-success btn-block-xs m-r-10 m-b-5" data-toggle="tooltip">
+                                <em class="fa fa-plus" aria-hidden="true"></em>
+                                <span th:text="#{button.new}"></span>
+                            </a>
+                            <a th:href="@{/configuration/users/list}" class="btn btn-primary btn-block-xs m-r-10 m-b-5" data-toggle="tooltip" aria-label="Limpar">
+                                <span class="fa fa-eraser" aria-hidden="true"></span>
+                                <span th:text="#{button.erase}"></span>
+                            </a>
+                            <button type="submit" data-form-submit="#form-search" data-toggle="tooltip" class="btn btn-primary btn-block-xs m-r-10 m-b-5" aria-label="Buscar">
+                                <span class="fa fa-search" aria-hidden="true"></span>
+                                <span th:text="#{button.search}"></span>
+                            </button>
+                            <a id="buttonBack" th:href="@{/configuration}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                                <span class="fa fa-arrow-left"></span>
+                                <span th:text="#{button.back}"></span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-3" th:if="${users != null}">
+                <div class="col-xs-12 table-responsive mt-3" id="userList">
+                    <table id="usersTable" class="table table-striped table-hover dataTable" aria-describedby="usersList">
+                        <thead>
+                            <tr>
+                                <th id="cellConfigurationUserUsername" class="text-center" th:text="#{user.list.login}" data-toogle="tooltip" th:title="#{user.list.login.sort}"></th>
+                                <th id="cellConfigurationUserName" class="text-center" th:text="#{user.list.name}" data-toogle="tooltip" th:title="#{user.list.name.sort}"></th>
+                                <th id="cellConfigurationUserLastName" class="text-center" th:text="#{user.list.lastName}" data-toogle="tooltip" th:title="#{user.list.lastName.sort}"></th>
+                                <th id="cellConfigurationUserRole" class="text-center" th:text="#{user.list.role}" data-toogle="tooltip" th:title="#{user.list.role.sort}"></th>
+                                <th id="cellConfigurationUserEdit" class="text-center" th:text="#{table.header.edit}"></th>
+                                <th id="cellConfigurationUserDelete" class="text-center" th:text="#{table.header.delete}"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="row : ${users}">
+                                <td headers="cellConfigurationUserUsername" class="text-center align-center-vertical" th:text="${row.username}"></td>
+                                <td headers="cellConfigurationUserName" class="text-center align-center-vertical" th:text="${row.name}"></td>
+                                <td headers="cellConfigurationUserLastName" class="text-center align-center-vertical" th:text="${row.lastName}"></td>
+                                <td headers="cellConfigurationUserRole" class="text-center align-center-vertical" th:text="${row.role.name}"></td>
+                                <td headers="cellConfigurationUserEdit" class="text-center align-center-vertical">
+                                    <a th:href="@{/configuration/users/edit/{idUser}(idUser=${row.idUser})}">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                                <td headers="cellConfigurationUserDelete" class="text-center align-center-vertical">
+                                    <a th:href="@{/configuration/users/delete/{idUser}(idUser=${row.idUser})}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</main>
+</body>
+<script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
+<script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+<script src="/js/dataTable.js" th:src="@{/js/dataTable.js}"></script>
+</html>

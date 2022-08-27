@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sd="http://www.thymeleaf.org/spring-data">
+<head>
+    <meta charset="UTF-8">
+    <title>Configuracion</title>
+    <div th:include="/common/libraries-fragment"></div>
+    <link rel="stylesheet" type="text/css" href="/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
+</head>
+<body>
+<div th:include="/common/asideMenu-fragment"></div>
+
+<main id="main">
+    <div class="container-fuild main-content">
+        <fieldset>
+            <legend> Edicion de usuarios </legend>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
+                    <div th:include="/common/alertMessages-fragment"></div>
+                    <form class="was-validated" th:action="@{/configuration/users/save}" th:object="${userDTO}" method="POST">
+                        <input type="hidden" th:field="*{idUser}">
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label>Login</label>
+                                <input type="text" class="form-control" th:field="*{username}" placeholder="Login" readonly>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label>Contraseña</label>
+                                <input type="password" class="form-control" th:field="*{password}" placeholder="Contraseña" required>
+                                <div class="valid-feedback">Correcto.</div>
+                                <div class="invalid-feedback">Rellena este campo.</div>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label> Nombre </label>
+                                <input type="text" class="form-control" th:field="*{name}" placeholder="Nombre" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label>Apellidos</label>
+                                <input type="text" class="form-control" th:field="*{lastName}" placeholder="Apellidos" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label>Role</label>
+                                <select class="form-control" th:field="*{role}">
+                                    <option value="" selected>Selecciona</option>
+                                    <option th:each="row : ${roles}" th:value="${row.idRole}" th:text="${row.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pull-right mt-4">
+                            <button type="submit" data-toggle="tooltip" class="btn btn-success btn-block-xs m-r-10 m-b-5" aria-label="Añadir">
+                                <span class="fa fa-plus" aria-hidden="true"></span>
+                                <span>Añadir</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</main>
+
+</body>
+<script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
+<script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+</html>

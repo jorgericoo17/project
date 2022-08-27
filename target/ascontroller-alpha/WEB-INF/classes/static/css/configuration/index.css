@@ -1,0 +1,22 @@
+/*PANELS*/
+.panel-default {
+    border: 1px solid #17171c;
+    border-radius: 5px;
+}
+
+.panel-heading {
+    background-color: #517ba8;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #17171c;
+}
+
+.panel-body {
+    background-color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.sorted {
+    color:#517ba8;
+}

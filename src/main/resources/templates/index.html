@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <div th:include="/common/libraries-fragment"></div>
+  <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
+</head>
+<body>
+<div th:include="/common/asideMenu-fragment"></div>
+
+<main id="main">
+  <div class="container-fuild main-content" style="border: 1px solid black">
+    <fieldset>
+      <h1 th:text="#{home.greeting} + ', ' + ${username}"></h1>
+    </fieldset>
+  </div>
+</main>
+</body>
+<script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
+<script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+</html>

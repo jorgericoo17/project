@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{configuration.users.title}"></title>
+    <div th:include="/common/libraries-fragment"></div>
+    <link rel="stylesheet" type="text/css" href="/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
+</head>
+<body>
+<div th:include="/common/asideMenu-fragment"></div>
+
+<main id="main">
+    <div class="container-fuild main-content">
+        <fieldset>
+            <legend th:text="#{user.edit}"></legend>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
+                    <div th:include="/common/alertMessages-fragment"></div>
+                    <form class="was-validated" th:action="@{/configuration/users/save}" th:object="${userDTO}" method="POST">
+                        <input type="hidden" th:field="*{idUser}">
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" th:text="#{user.list.login}"></label>
+                                <input type="text" class="form-control" th:field="*{username}" th:placeholder="#{user.list.login.placeholder}" readonly>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" th:text="#{user.list.name}"></label>
+                                <input type="text" class="form-control" th:field="*{name}" th:placeholder="#{user.list.name.placeholder}" required>
+                                <div class="valid-feedback" th:text="#{user.list.name.valid.feedback}"></div>
+                                <div class="invalid-feedback" th:text="#{user.list.name.invalid.feedback}"></div>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" th:text="#{user.list.lastName}"></label>
+                                <input type="text" class="form-control" th:field="*{lastName}" th:placeholder="#{user.list.name.placeholder}" required>
+                                <div class="valid-feedback" th:text="#{user.list.lastName.valid.feedback}"></div>
+                                <div class="invalid-feedback" th:text="#{user.list.lastName.invalid.feedback}">P</div>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="role" th:text="#{user.list.role}"></label>
+                                <select class="form-select" name="role" required>
+                                    <option selected disabled value="" th:text="#{select.option.default}"></option>
+                                    <option th:each="row : ${roles}" th:value="${row.idRole}" th:text="${row.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pull-right mt-4">
+                            <button type="submit" data-toggle="tooltip" class="btn btn-success btn-block-xs m-r-10 m-b-5" aria-label="Añadir">
+                                <span class="fa fa-floppy-o" aria-hidden="true"></span>
+                                <span th:text="#{button.save}"></span>
+                            </button>
+                            <a th:href="@{/configuration/passwdProfile/{idUser}(idUser=${userDTO.idUser})}" data-toggle="tooltip" class="btn btn-success m-b-5">
+                                <span class="fa fa-key"></span>
+                                <span th:text="#{button.change.passwd}"></span>
+                            </a>
+                            <a id="buttonBack" th:href="@{/configuration/users/list}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                                <span class="fa fa-arrow-left"></span>
+                                <span th:text="#{button.back}"></span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</main>
+
+</body>
+<script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
+<script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+</html>

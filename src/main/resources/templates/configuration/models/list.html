@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{configuration.models.title}"></title>
+    <div th:include="/common/libraries-fragment"></div>
+    <link rel="stylesheet" type="text/css" href="/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
+    <link rel="stylesheet" type="text/css" href="/css/common/dataTable.css">
+</head>
+<body>
+<div th:include="/common/asideMenu-fragment"></div>
+
+<main id="main">
+    <div class="container-fuild main-content">
+        <fieldset>
+            <legend th:text="#{model.list.legend}"></legend>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
+
+                    <div th:include="/common/alertMessages-fragment"></div>
+
+                    <form th:action="@{/configuration/models/search}" th:object="${modelFilter}" method="get" id="form-search">
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="name" th:text="#{model.list.name}"></label>
+                                <input type="text" class="form-control" th:field="*{name}" th:placeholder="#{model.list.name.placeholder}">
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="finish" th:text="#{model.list.finish}"></label>
+                                <input type="text" class="form-control" th:field="*{finish}" th:placeholder="#{model.list.finish.placeholder}">
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="year" th:text="#{model.list.year}"> </label>
+                                <input type="number" class="form-control" th:field="*{year}" th:placeholder="#{model.list.year.placeholder}">
+                            </div>
+                        </div>
+                        <div class="pull-right mt-4">
+                            <a th:href="@{/configuration/models/add}" class="btn btn-success btn-block-xs m-r-10 m-b-5" data-toggle="tooltip">
+                                <em class="fa fa-plus" aria-hidden="true"></em>
+                                <span th:text="#{button.new}"></span>
+                            </a>
+                            <a th:href="@{/configuration/models/list}" class="btn btn-primary btn-block-xs m-r-10 m-b-5" data-toggle="tooltip" aria-label="Limpar">
+                                <span class="fa fa-eraser" aria-hidden="true"></span>
+                                <span th:text="#{button.erase}"></span>
+                            </a>
+                            <button type="submit" data-form-submit="#form-search" data-toggle="tooltip" class="btn btn-primary btn-block-xs m-r-10 m-b-5" aria-label="Buscar">
+                                <span class="fa fa-search" aria-hidden="true"></span>
+                                <span th:text="#{button.search}"></span>
+                            </button>
+                            <a id="buttonBack" th:href="@{/configuration}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                                <span class="fa fa-arrow-left"></span>
+                                <span th:text="#{button.back}"></span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row mt-3" th:if="${models != null}">
+                <div class="col-xs-12 table-responsive mt-3" id="userList">
+                    <table id="usersTable" class="table table-striped table-hover dataTable" aria-describedby="usersList">
+                        <thead>
+                        <tr>
+                            <th id="cellConfigurationModelName" class="text-center" th:text="#{model.list.name}" data-toogle="tooltip" th:title="#{model.list.name.sort}"></th>
+                            <th id="cellConfigurationModelFinish" class="text-center" th:text="#{model.list.finish}" data-toogle="tooltip" th:title="#{model.list.finish.sort}"></th>
+                            <th id="cellConfigurationModelYear" class="text-center" th:text="#{model.list.year}" data-toogle="tooltip" th:title="#{model.list.year.sort}"></th>
+                            <th id="cellConfigurationModelEdit" class="text-center" th:text="#{table.header.edit}"></th>
+                            <th id="cellConfigurationModelDelete" class="text-center" th:text="#{table.header.delete}"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="row : ${models}">
+                            <td headers="cellConfigurationModelName" class="text-center align-center-vertical" th:text="${row.name}"></td>
+                            <td headers="cellConfigurationModelFinish" class="text-center align-center-vertical" th:text="${row.finish}"></td>
+                            <td headers="cellConfigurationModelYear" class="text-center align-center-vertical" th:text="${row.year}"></td>
+                            <td headers="cellConfigurationModelEdit" class="text-center align-center-vertical">
+                                <a th:href="@{/configuration/models/edit/{idModel}(idModel=${row.idModel})}">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td headers="cellConfigurationModelDelete" class="text-center align-center-vertical">
+                                <a th:href="@{/configuration/models/delete/{idModel}(idModel=${row.idModel})}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</main>
+</body>
+<script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
+<script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+<script src="/js/dataTable.js" th:src="@{/js/dataTable.js}"></script>
+</html>

@@ -1,0 +1,15 @@
+legend {
+    border-bottom: 1px solid #517ba8;
+}
+
+.btn-primary{
+    background-color: #517ba8 !important;
+}
+
+th, th > a, legend, .fa-pencil  {
+    color: #517ba8 !important;
+}
+
+.fa-trash {
+    color: #c51e20 !important;
+}

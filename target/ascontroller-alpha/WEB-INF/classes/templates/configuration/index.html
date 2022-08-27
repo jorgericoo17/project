@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Configuracion</title>
+  <div th:include="/common/libraries-fragment"></div>
+  <link rel="stylesheet" type="text/css" href="/css/common/common.css">
+  <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
+  <link rel="stylesheet" type="text/css" href="/css/configuration/index.css">
+</head>
+<body>
+<div th:include="/common/asideMenu-fragment"></div>
+
+<main id="main">
+  <div class="container-fuild main-content">
+    <fieldset>
+      <legend> Configuracion </legend>
+        <div class="row">
+          <!-- Users configuration -->
+          <div sec:authorize="hasRole('ROLE_ADMIN')" class="col-sm-12 col-md-4">
+            <div class="panel panel-default mt-3">
+              <div class="panel-heading">
+                <h5 class="panel-title text-center pt-2 text-white">
+                  <em class="fa fa-user"></em>
+                  <span>Usuarios</span>
+                </h5>
+              </div>
+              <div class="panel-body">
+                <p class="ms-2 me-2 pt-2"> Apartado para a configuracion de usuarios</p>
+                <a th:href="@{/configuration/users/list}" class="btn btn-primary ms-2 mb-2" data-toggle="tooltip" title="Ir a configuracion de usuarios">Acceder</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-4">
+            <div class="panel panel-default mt-3">
+              <div class="panel-heading">
+                <h5 class="panel-title text-center pt-2 text-white">
+                  <em class="fa fa-car"></em>
+                  <span class="ms-2">Vehiculos</span>
+                </h5>
+              </div>
+              <div class="panel-body">
+                <p class="ms-2 me-2 pt-2"> Apartado para a configuracion de vehiculos</p>
+                <a href="#" class="btn btn-primary ms-2 mb-2" data-toggle="tooltip" title="Ir a configuracion de usuarios">Acceder</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-4">
+            <div class="panel panel-default mt-3">
+              <div class="panel-heading">
+                <h5 class="panel-title text-center pt-2 text-white pt-2 text-white">
+                  <em class="glyphicon glyphicon-info-sign"></em>
+                  <span class="ms-2">Usuarios</span>
+                </h5>
+              </div>
+              <div class="panel-body">
+                <p class="ms-2 me-2"> Apartado para a configuracion de usuarios</p>
+                <a href="#" class="btn btn-primary ms-2 mb-2" data-toggle="tooltip" title="Ir a configuracion de usuarios">Acceder</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </fieldset>
+  </div>
+</main>
+
+</body>
+<script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
+<script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+</html>
