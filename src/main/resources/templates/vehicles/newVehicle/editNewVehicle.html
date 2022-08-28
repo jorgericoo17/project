@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{new.vehicle.edit}"></title>
+    <div th:include="/common/libraries-fragment"></div>
+    <link rel="stylesheet" type="text/css" href="/css/common/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
+</head>
+<body>
+<div th:include="/common/asideMenu-fragment"></div>
+
+<main id="main">
+    <div class="container-fuild main-content">
+        <fieldset>
+            <legend th:text="#{new.vehicle.edit}"></legend>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
+                    <form class="was-validated" th:action="@{/vehicles/newVehicle/save}" th:object="${newVehicleDTO}" method="POST">
+                        <input type="hidden" th:field="*{idNewVehicle}">
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label for="exampleDataList" class="form-label" th:text="#{new.vehicle.model}"></label>
+                                <input type="text" class="form-control" th:value="|${newVehicleDTO.model.name} ${newVehicleDTO.model.year} ${newVehicleDTO.model.finish}|" th:placeholder="#{new.vehicle.plate.placeholder}" disabled>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="chassisNumber" th:text="#{new.vehicle.chassis.number}"></label>
+                                <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}" disabled>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="plate" th:text="#{new.vehicle.plate}"></label>
+                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" disabled>
+                            </div>
+                            <div class="nput-group date col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="billingDate" th:text="#{new.vehicle.billing.date}"></label>
+                                <input type="text" class="form-control" th:value="${#dates.format(newVehicleDTO.billingDate, 'dd-MM-yyyy')}" th:placeholder="#{new.vehicle.billing.date.placeholder}" disabled>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="nput-group date col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="sellPrice" th:text="#{new.vehicle.sell.price}"></label>
+                                <input type="number" min=0 class="form-control" th:field="*{sellPrice}" th:placeholder="#{new.vehicle.sell.price.placeholder}" required>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="status" th:text="#{new.vehicle.status}"></label>
+                                <select class="form-select" name="status" required>
+                                    <option selected value="" th:text="#{select.option.default}"></option>
+                                    <option th:each="status : ${statusList}" th:value="${status.idStatus}" th:text="${status.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pull-right mt-4">
+                            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" th:href="@{/vehicles/newVehicle/add}" class="btn btn-success btn-block-xs m-r-10 m-b-5" data-toggle="tooltip">
+                                <em class="fa fa-plus" aria-hidden="true"></em>
+                                <span th:text="#{button.new}"></span>
+                            </a>
+                            <a th:href="@{/configuration/users/list}" class="btn btn-primary btn-block-xs m-r-10 m-b-5" data-toggle="tooltip" aria-label="Limpar">
+                                <span class="fa fa-eraser" aria-hidden="true"></span>
+                                <span th:text="#{button.erase}"></span>
+                            </a>
+                            <button type="submit" data-form-submit="#form-search" data-toggle="tooltip" class="btn btn-primary btn-block-xs m-r-10 m-b-5" aria-label="Buscar">
+                                <span class="fa fa-search" aria-hidden="true"></span>
+                                <span th:text="#{button.search}"></span>
+                            </button>
+                            <a id="buttonBack" th:href="@{/configuration}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                                <span class="fa fa-arrow-left"></span>
+                                <span th:text="#{button.back}"></span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</main>
+
+</body>
+<script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
+<script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+<script src="/js/dataTable.js" th:src="@{/js/dataTable.js}"></script>
+</html>

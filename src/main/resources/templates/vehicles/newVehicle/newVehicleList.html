@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{new.vehicles.list.title}"></title>
@@ -14,54 +15,54 @@
 <main id="main">
     <div class="container-fuild main-content">
         <fieldset>
-            <legend th:text="#{new.vehicle.add.legend}"></legend>
+            <legend th:text="#{new.vehicle.list.legend}"></legend>
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
-
-                    <div id="passConfirm" class="alert alert-danger mt-2" role="alert"> Las contraseñas no coinciden </div>
-
                     <form th:action="@{/vehicles/newVehicle/list}" th:object="${newVehicleDTO}" method="POST">
                         <div class="row">
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="chassisNumber" th:text="#{new.vehicle.chassis.number}"></label>
-                                <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}" readonly>
+                                <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}">
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                                <label class="form-label" for="plate" th:text="#{new.vahicle.plate}"></label>
-                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vahicle.plate.placeholder}" required>
+                                <label class="form-label" for="plate" th:text="#{new.vehicle.plate}"></label>
+                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" required>
                             </div>
-                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                            <div class="nput-group date col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="billingDate" th:text="#{new.vehicle.billing.date}"></label>
                                 <input type="date" class="form-control" th:field="*{billingDate}" th:placeholder="#{new.vehicle.billing.date.placeholder}" required>
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                                <label class="form-label" for="sellingDate" th:text="#{new.vehicle.selling.date}"></label>
-                                <input type="date" class="form-control" th:field="*{sellingDate}" th:placeholder="#{new.vehicle.selling.date.placeholder}" required>
+                                <label for="exampleDataList" class="form-label" th:text="#{new.vehicle.model}"></label>
+                                <input class="form-control" list="datalistOptions" id="exampleDataList" th:placeholder="#{new.vehicle.model.placeholder}">
+                                <datalist id="datalistOptions">
+                                    <option th:each="model : ${modelList}" th:value="${model.idModel}" th:text="|${model.name} ${model.year} ${model.finish}|">
+                                </datalist>
                             </div>
-
                         </div>
                         <div class="row mt-2">
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                                <label for="model" class="form-label" th:text="#{new.vehicle.model}"></label>
-                                <input class="form-control" list="modelList" th:field="${model}" th:placeholder="#{new.vehicle.model.placeholder}">
-                                <datalist id="modelList">
-                                    <option th:each="model : ${modelList}" th:value="${model.idModel}" th:text="${model.name}">
-                                </datalist>
-                            </div>
-                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="status" th:text="#{new.vehicle.status}"></label>
-                                <select class="form-select" th:field="${status}" required>
-                                    <option selected disabled value="" th:text="#{select.option.default}"></option>
+                                <select class="form-select" name="status" required>
+                                    <option selected value="" th:text="#{select.option.default}"></option>
                                     <option th:each="status : ${statusList}" th:value="${status.idStatus}" th:text="${status.name}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="pull-right mt-4">
-                            <button id="save" type="submit" data-toggle="tooltip" class="btn btn-success btn-block-xs m-r-10 m-b-5 disabled" aria-label="Añadir">
-                                <span class="fa fa-floppy-o" aria-hidden="true"></span>
-                                <span th:text="#{button.save}"></span>
+                            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" th:href="@{/vehicles/newVehicle/add}" class="btn btn-success btn-block-xs m-r-10 m-b-5" data-toggle="tooltip">
+                                <em class="fa fa-plus" aria-hidden="true"></em>
+                                <span th:text="#{button.new}"></span>
+                            </a>
+                            <a th:href="@{/configuration/users/list}" class="btn btn-primary btn-block-xs m-r-10 m-b-5" data-toggle="tooltip" aria-label="Limpar">
+                                <span class="fa fa-eraser" aria-hidden="true"></span>
+                                <span th:text="#{button.erase}"></span>
+                            </a>
+                            <button type="submit" data-form-submit="#form-search" data-toggle="tooltip" class="btn btn-primary btn-block-xs m-r-10 m-b-5" aria-label="Buscar">
+                                <span class="fa fa-search" aria-hidden="true"></span>
+                                <span th:text="#{button.search}"></span>
                             </button>
-                            <a id="buttonBack" th:href="@{/vehicles}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                            <a id="buttonBack" th:href="@{/configuration}" data-toggle="tooltip" class="btn btn-primary m-b-5">
                                 <span class="fa fa-arrow-left"></span>
                                 <span th:text="#{button.back}"></span>
                             </a>
@@ -69,32 +70,36 @@
                     </form>
                 </div>
             </div>
-            <div class="row mt-3" th:if="${users != null}">
+            <div class="row mt-3" th:if="${newVehicleList != null}">
                 <div class="col-xs-12 table-responsive mt-3" id="userList">
                     <table id="usersTable" class="table table-striped table-hover dataTable" aria-describedby="usersList">
                         <thead>
                         <tr>
-                            <th id="cellConfigurationUserUsername" class="text-center" th:text="#{user.list.login}" data-toogle="tooltip" th:title="#{user.list.login.sort}"></th>
-                            <th id="cellConfigurationUserName" class="text-center" th:text="#{user.list.name}" data-toogle="tooltip" th:title="#{user.list.name.sort}"></th>
-                            <th id="cellConfigurationUserLastName" class="text-center" th:text="#{user.list.lastName}" data-toogle="tooltip" th:title="#{user.list.lastName.sort}"></th>
-                            <th id="cellConfigurationUserRole" class="text-center" th:text="#{user.list.role}" data-toogle="tooltip" th:title="#{user.list.role.sort}"></th>
-                            <th id="cellConfigurationUserEdit" class="text-center" th:text="#{table.header.edit}"></th>
-                            <th id="cellConfigurationUserDelete" class="text-center" th:text="#{table.header.delete}"></th>
+                            <th id="cellNewVehicleModelName" class="text-center" th:text="#{model.list.name}" data-toogle="tooltip" th:title="#{model.list.name.sort}"></th>
+                            <th id="cellNewVehicleModelFinish" class="text-center" th:text="#{model.list.finish}" data-toogle="tooltip" th:title="#{model.list.finish.sort}"></th>
+                            <th id="cellNewVehicleModelYear" class="text-center" th:text="#{model.list.year}" data-toogle="tooltip" th:title="#{model.list.year.sort}"></th>
+                            <th id="cellNewVehicleSellPrice" class="text-center" th:text="#{new.vehicle.sell.price}" data-toogle="tooltip" th:title="#{new.vehicle.sell.price.sort}"></th>
+                            <th id="cellNewVehicleBillingDate" class="text-center" th:text="#{new.vehicle.billing.date}" data-toogle="tooltip" th:title="#{new.vehicle.billing.date.sort}"></th>
+                            <th id="cellNewVehicleStatus" class="text-center" th:text="#{new.vehicle.status}" data-toogle="tooltip" th:title="#{new.vehicle.status.sort}"></th>
+                            <th id="cellNewVehicleEdit" class="text-center" th:text="#{table.header.edit}"></th>
+                            <th id="cellNewVehicleDelete" class="text-center" th:text="#{table.header.delete}"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="row : ${users}">
-                            <td headers="cellConfigurationUserUsername" class="text-center align-center-vertical" th:text="${row.username}"></td>
-                            <td headers="cellConfigurationUserName" class="text-center align-center-vertical" th:text="${row.name}"></td>
-                            <td headers="cellConfigurationUserLastName" class="text-center align-center-vertical" th:text="${row.lastName}"></td>
-                            <td headers="cellConfigurationUserRole" class="text-center align-center-vertical" th:text="${row.role.name}"></td>
-                            <td headers="cellConfigurationUserEdit" class="text-center align-center-vertical">
-                                <a th:href="@{/configuration/users/edit/{idUser}(idUser=${row.idUser})}">
+                        <tr th:each="row : ${newVehicleList}">
+                            <td headers="cellNewVehicleModelName" class="text-center align-center-vertical" th:text="${row.model.name}"></td>
+                            <td headers="cellNewVehicleModelFinish" class="text-center align-center-vertical" th:text="${row.model.finish}"></td>
+                            <td headers="cellNewVehicleModelYear" class="text-center align-center-vertical" th:text="${row.model.year}"></td>
+                            <td headers="cellNewVehicleSellPrice" class="text-center align-center-vertical" th:text="${row.sellPrice}"></td>
+                            <td headers="cellNewVehicleBillingDate" class="text-center align-center-vertical" th:text="${#dates.format(row.billingDate, 'dd-MM-yyyy')}"></td>
+                            <td headers="cellNewVehicleStatus" class="text-center align-center-vertical" th:text="${row.status.name}"></td>
+                            <td headers="cellNewVehicleEdit" class="text-center align-center-vertical">
+                                <a th:href="@{/vehicles/newVehicle/edit/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </a>
                             </td>
-                            <td headers="cellConfigurationUserDelete" class="text-center align-center-vertical">
-                                <a th:href="@{/configuration/users/delete/{idUser}(idUser=${row.idUser})}">
+                            <td headers="cellNewVehicleDelete" class="text-center align-center-vertical">
+                                <a th:href="@{/vehicles/newVehicle/delete/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
@@ -110,7 +115,5 @@
 </body>
 <script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
 <script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
-<script src="/js/passwdConfirm.js" th:src="@{/js/passwdConfirm.js}"></script>
-<script src="/js/buttonBack.js" th:src="@{/js/buttonBack.js}"></script>
-
+<script src="/js/dataTable.js" th:src="@{/js/dataTable.js}"></script>
 </html>

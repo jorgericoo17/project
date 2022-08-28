@@ -4,10 +4,15 @@ import com.software.ascontroller.language.LanguageEnum;
 import com.software.ascontroller.model.services.ModelService;
 import com.software.ascontroller.status.entities.Status;
 import com.software.ascontroller.status.services.StatusService;
+import com.software.ascontroller.vehicles.newVehicle.dtos.NewVehicleDTO;
+import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
+import com.software.ascontroller.vehicles.newVehicle.services.NewVehicleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -22,6 +27,8 @@ public class NewVehicleController {
     private ModelService modelService;
     @Autowired
     private StatusService statusService;
+    @Autowired
+    private NewVehicleService newVehicleService;
 
     @GetMapping("/list")
     public String newVehicleList(Model model) {
@@ -29,7 +36,28 @@ public class NewVehicleController {
         return "/vehicles/newVehicle/newVehicleList";
     }
 
+    @GetMapping("/edit/{idNewVehicle}")
+    public String editNewVehicle(Model model,
+                                 @PathVariable("idNewVehicle") Long idNewVehicle) {
+        this.loadEditNewVehicleScreen(model,idNewVehicle);
+        return "/vehicles/newVehicle/editNewVehicle";
+    }
+
+    private void loadEditNewVehicleScreen(Model model,
+                                          Long idNewVehicle) {
+
+        NewVehicle newVehicle = this.newVehicleService.findById(idNewVehicle).get();
+        NewVehicleDTO newVehicleDTO = new NewVehicleDTO();
+        BeanUtils.copyProperties(newVehicle,newVehicleDTO);
+        model.addAttribute("newVehicleDTO", newVehicleDTO);
+        this.loadCommonAtributtesNavbar(model);
+        this.loadModelAndStatusAtributtes(model);
+    }
+
     private void loadNewVehicleListScreen(Model model) {
+        model.addAttribute("newVehicleDTO",new NewVehicleDTO());
+        List<NewVehicle> newVehicleList = this.newVehicleService.findAllInStock();
+        model.addAttribute("newVehicleList", newVehicleList);
         this.loadModelAndStatusAtributtes(model);
         this.loadCommonAtributtesNavbar(model);
     }

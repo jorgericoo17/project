@@ -32,6 +32,9 @@ public class NewVehicle implements Serializable {
     @Column(name = "PLATE")
     private String plate;
 
+    @Column(name = "SELL_PRICE")
+    private Double sellPrice;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "BILLING_DATE")
