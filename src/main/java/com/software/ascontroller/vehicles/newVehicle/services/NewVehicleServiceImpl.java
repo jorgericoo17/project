@@ -44,15 +44,11 @@ public class NewVehicleServiceImpl implements NewVehicleService{
         if(newVehicleDTO.getIdNewVehicle() != null) {
             newVehicle.setIdNewVehicle(newVehicleDTO.getIdNewVehicle());
         }
-        if(newVehicleDTO.getSellingDate() != null) {
-            newVehicle.setSellingDate(newVehicleDTO.getSellingDate());
-        }
         newVehicle.setChassisNumber(newVehicleDTO.getChassisNumber());
         newVehicle.setPlate(newVehicleDTO.getPlate());
         newVehicle.setSellPrice(newVehicleDTO.getSellPrice());
         newVehicle.setModel(newVehicleDTO.getModel());
         newVehicle.setStatus(newVehicleDTO.getStatus());
-        newVehicle.setBillingDate(newVehicleDTO.getBillingDate());
 
         return newVehicle;
     }

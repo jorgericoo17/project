@@ -35,16 +35,6 @@ public class NewVehicle implements Serializable {
     @Column(name = "SELL_PRICE")
     private Double sellPrice;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "BILLING_DATE")
-    private Date billingDate;
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "SELLING_DATE")
-    private Date sellingDate;
-
     @NotNull
     @ManyToOne
     @JoinColumn(name = "IDMODEL")

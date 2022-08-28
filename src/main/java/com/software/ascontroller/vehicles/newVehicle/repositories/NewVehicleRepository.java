@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface NewVehicleRepository extends JpaRepository<NewVehicle, Long> {
 
-    @Query("FROM NewVehicle nv WHERE nv.sellingDate IS NULL")
+    @Query("FROM NewVehicle nv WHERE nv.status.idStatus NOT LIKE 3")
     List<NewVehicle> findAllInStock();
+
+    @Query("FROM NewVehicle nv WHERE nv.status.idStatus LIKE 3")
+    List<NewVehicle> findAllSold();
 }

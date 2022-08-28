@@ -16,8 +16,6 @@ public class NewVehicleDTO {
     private String chassisNumber;
     private String plate;
     private Double sellPrice;
-    private Date billingDate;
-    private Date sellingDate;
     private Model model;
     private Status status;
 }
