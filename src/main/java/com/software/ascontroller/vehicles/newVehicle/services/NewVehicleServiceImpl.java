@@ -3,7 +3,11 @@ package com.software.ascontroller.vehicles.newVehicle.services;
 import com.software.ascontroller.vehicles.newVehicle.dtos.NewVehicleDTO;
 import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
 import com.software.ascontroller.vehicles.newVehicle.repositories.NewVehicleRepository;
+import com.software.ascontroller.vehicles.newVehicle.search.NewVehicleFilter;
+import com.software.ascontroller.vehicles.newVehicle.search.NewVehicleSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,5 +66,10 @@ public class NewVehicleServiceImpl implements NewVehicleService{
     @Override
     public List<NewVehicle> findByIdModel(Long idModel) {
         return this.newVehicleRepository.findByIdModel(idModel);
+    }
+
+    @Override
+    public Page<NewVehicle> findAll(NewVehicleFilter newVehicleFilter, Pageable pageable) {
+        return this.newVehicleRepository.findAll(NewVehicleSpecifications.filterBy(newVehicleFilter), pageable);
     }
 }

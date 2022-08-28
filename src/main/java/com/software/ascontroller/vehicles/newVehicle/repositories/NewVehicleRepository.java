@@ -1,6 +1,9 @@
 package com.software.ascontroller.vehicles.newVehicle.repositories;
 
 import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,4 +18,6 @@ public interface NewVehicleRepository extends JpaRepository<NewVehicle, Long> {
     List<NewVehicle> findAllSold();
     @Query("FROM NewVehicle nv WHERE nv.model.idModel = :idModel")
     List<NewVehicle> findByIdModel(Long idModel);
+
+    Page<NewVehicle> findAll(Specification<NewVehicle> specification, Pageable pageable);
 }

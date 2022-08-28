@@ -6,9 +6,12 @@ import com.software.ascontroller.status.entities.Status;
 import com.software.ascontroller.status.services.StatusService;
 import com.software.ascontroller.vehicles.newVehicle.dtos.NewVehicleDTO;
 import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
+import com.software.ascontroller.vehicles.newVehicle.search.NewVehicleFilter;
 import com.software.ascontroller.vehicles.newVehicle.services.NewVehicleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +39,23 @@ public class NewVehicleController {
         return "/vehicles/newVehicle/newVehicleList";
     }
 
+    @GetMapping("/search")
+    public String searchNewVehicless(Model model,
+                                     @ModelAttribute("newVehicleFilter") NewVehicleFilter newVehicleFilter,
+                                     Pageable pageable) {
+
+        this.loadSearchScreen(model, newVehicleFilter, pageable);
+
+        return "/vehicles/newVehicle/newVehicleList";
+    }
+
+    private void loadSearchScreen(Model model,
+                                  NewVehicleFilter newVehicleFilter,
+                                  Pageable pageable) {
+        this.loadCommonAtributtesNavbar(model);
+        this.loadModelAndStatusAtributtes(model);
+        model.addAttribute("newVehicleList", this.newVehicleService.findAll(newVehicleFilter,pageable));
+    }
     @GetMapping("/edit/{idNewVehicle}")
     public String editNewVehicle(Model model,
                                  @PathVariable("idNewVehicle") Long idNewVehicle) {
@@ -94,7 +114,7 @@ public class NewVehicleController {
     }
 
     private void loadNewVehicleListScreen(Model model) {
-        model.addAttribute("newVehicleDTO",new NewVehicleDTO());
+        model.addAttribute("newVehicleFilter", new NewVehicleFilter());
         List<NewVehicle> newVehicleList = this.newVehicleService.findAllInStock();
         model.addAttribute("newVehicleList", newVehicleList);
         this.loadModelAndStatusAtributtes(model);
