@@ -57,5 +57,5 @@ public class NewVehicle implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "IDSELLER")
-    private User user;
+    private User seller;
 }

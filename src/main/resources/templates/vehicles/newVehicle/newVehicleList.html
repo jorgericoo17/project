@@ -18,6 +18,9 @@
             <legend th:text="#{new.vehicle.list.legend}"></legend>
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
+
+                    <div th:include="/common/alertMessages-fragment"></div>
+
                     <form th:action="@{/vehicles/newVehicle/list}" th:object="${newVehicleDTO}" method="POST">
                         <div class="row">
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">

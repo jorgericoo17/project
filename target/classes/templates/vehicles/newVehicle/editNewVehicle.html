@@ -22,26 +22,26 @@
                         <input type="hidden" th:field="*{idNewVehicle}">
                         <div class="row">
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                                <label for="exampleDataList" class="form-label" th:text="#{new.vehicle.model}"></label>
-                                <input type="text" class="form-control" th:value="|${newVehicleDTO.model.name} ${newVehicleDTO.model.year} ${newVehicleDTO.model.finish}|" th:placeholder="#{new.vehicle.plate.placeholder}" disabled>
+                                <label for="model" class="form-label" th:text="#{new.vehicle.model}"></label>
+                                <input type="text" class="form-control" name="model" th:value="|${newVehicleDTO.model.name} ${newVehicleDTO.model.year} ${newVehicleDTO.model.finish}|" th:placeholder="#{new.vehicle.plate.placeholder}" readonly>
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="chassisNumber" th:text="#{new.vehicle.chassis.number}"></label>
-                                <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}" disabled>
+                                <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}" readonly>
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="plate" th:text="#{new.vehicle.plate}"></label>
-                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" disabled>
+                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" readonly>
                             </div>
                             <div class="nput-group date col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="billingDate" th:text="#{new.vehicle.billing.date}"></label>
-                                <input type="text" class="form-control" th:value="${#dates.format(newVehicleDTO.billingDate, 'dd-MM-yyyy')}" th:placeholder="#{new.vehicle.billing.date.placeholder}" disabled>
+                                <input type="text" class="form-control" name="billingDate" th:value="${#dates.format(newVehicleDTO.billingDate, 'dd-MM-yyyy')}" th:placeholder="#{new.vehicle.billing.date.placeholder}" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="nput-group date col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="sellPrice" th:text="#{new.vehicle.sell.price}"></label>
-                                <input type="number" min=0 class="form-control" th:field="*{sellPrice}" th:placeholder="#{new.vehicle.sell.price.placeholder}" required>
+                                <input type="number" min=0 step="any" class="form-control" th:field="*{sellPrice}" th:placeholder="#{new.vehicle.sell.price.placeholder}" required>
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="status" th:text="#{new.vehicle.status}"></label>
@@ -52,19 +52,11 @@
                             </div>
                         </div>
                         <div class="pull-right mt-4">
-                            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" th:href="@{/vehicles/newVehicle/add}" class="btn btn-success btn-block-xs m-r-10 m-b-5" data-toggle="tooltip">
-                                <em class="fa fa-plus" aria-hidden="true"></em>
-                                <span th:text="#{button.new}"></span>
-                            </a>
-                            <a th:href="@{/configuration/users/list}" class="btn btn-primary btn-block-xs m-r-10 m-b-5" data-toggle="tooltip" aria-label="Limpar">
-                                <span class="fa fa-eraser" aria-hidden="true"></span>
-                                <span th:text="#{button.erase}"></span>
-                            </a>
-                            <button type="submit" data-form-submit="#form-search" data-toggle="tooltip" class="btn btn-primary btn-block-xs m-r-10 m-b-5" aria-label="Buscar">
-                                <span class="fa fa-search" aria-hidden="true"></span>
-                                <span th:text="#{button.search}"></span>
+                            <button type="submit" data-toggle="tooltip" class="btn btn-success btn-block-xs m-r-10 m-b-5" aria-label="Añadir">
+                                <span class="fa fa-floppy-o" aria-hidden="true"></span>
+                                <span th:text="#{button.save}"></span>
                             </button>
-                            <a id="buttonBack" th:href="@{/configuration}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                            <a id="buttonBack" th:href="@{/configuration/users/list}" data-toggle="tooltip" class="btn btn-primary m-b-5">
                                 <span class="fa fa-arrow-left"></span>
                                 <span th:text="#{button.back}"></span>
                             </a>

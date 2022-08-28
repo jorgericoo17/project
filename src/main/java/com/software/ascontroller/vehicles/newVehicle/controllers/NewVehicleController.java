@@ -11,9 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -43,6 +42,20 @@ public class NewVehicleController {
         return "/vehicles/newVehicle/editNewVehicle";
     }
 
+    @PostMapping("/save")
+    public String saveNewVehicle(@ModelAttribute("newVehicleDTO") NewVehicleDTO newVehicleDTO,
+                                 RedirectAttributes ra) {
+        NewVehicle newVehicle = this.newVehicleService.getNewVehicleFromDTO(newVehicleDTO);
+        return this.saveAndRedirect(newVehicle, ra);
+    }
+
+    private String saveAndRedirect(NewVehicle newVehicle,
+                                   RedirectAttributes ra) {
+        NewVehicle newVehicleSaved = this.newVehicleService.save(newVehicle);
+        ra.addFlashAttribute("messageOK","Se ha guardado el vehiculo "+newVehicleSaved.getModel().getName() + " " + newVehicleSaved.getModel().getFinish());
+        return "redirect:/vehicles/newVehicle/list";
+    }
+
     private void loadEditNewVehicleScreen(Model model,
                                           Long idNewVehicle) {
 
@@ -52,6 +65,7 @@ public class NewVehicleController {
         model.addAttribute("newVehicleDTO", newVehicleDTO);
         this.loadCommonAtributtesNavbar(model);
         this.loadModelAndStatusAtributtes(model);
+        this.showAlertMessages(model);
     }
 
     private void loadNewVehicleListScreen(Model model) {
@@ -74,5 +88,15 @@ public class NewVehicleController {
         List<LanguageEnum> languages = new ArrayList<>(EnumSet.allOf(LanguageEnum.class));
         model.addAttribute("languages",languages);
         model.addAttribute("navLink", "vehicles");
+    }
+
+    private void showAlertMessages(Model model) {
+        String messageOK = (String) model.asMap().get("messageOK");
+        String messageError = (String) model.asMap().get("messageError");
+        if (messageOK != null) {
+            model.addAttribute("messageOK", messageOK);
+        } else {
+            model.addAttribute("messageError", messageError);
+        }
     }
 }

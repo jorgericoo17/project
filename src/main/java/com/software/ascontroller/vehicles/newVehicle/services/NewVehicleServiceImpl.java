@@ -1,5 +1,6 @@
 package com.software.ascontroller.vehicles.newVehicle.services;
 
+import com.software.ascontroller.vehicles.newVehicle.dtos.NewVehicleDTO;
 import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
 import com.software.ascontroller.vehicles.newVehicle.repositories.NewVehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,27 @@ public class NewVehicleServiceImpl implements NewVehicleService{
     @Override
     public Optional<NewVehicle> findById(Long idNewVehicle) {
         return this.newVehicleRepository.findById(idNewVehicle);
+    }
+
+    @Override
+    public NewVehicle save(NewVehicle newVehicle) {
+        return this.newVehicleRepository.save(newVehicle);
+    }
+
+    @Override
+    public NewVehicle getNewVehicleFromDTO(NewVehicleDTO newVehicleDTO) {
+        NewVehicle newVehicle = new NewVehicle();
+        if(newVehicleDTO.getIdNewVehicle() != null) {
+            newVehicle.setIdNewVehicle(newVehicleDTO.getIdNewVehicle());
+        }
+        if(newVehicleDTO.getSellingDate() != null) {
+            newVehicle.setSellingDate(newVehicleDTO.getSellingDate());
+        }
+        newVehicle.setChassisNumber(newVehicleDTO.getChassisNumber());
+        newVehicle.setPlate(newVehicleDTO.getPlate());
+        newVehicle.setSellPrice(newVehicleDTO.getSellPrice());
+        newVehicle.setModel(newVehicleDTO.getModel());
+
+        return null;
     }
 }
