@@ -76,7 +76,6 @@
                             <th id="cellNewVehicleModelFinish" class="text-center" th:text="#{model.list.finish}" data-toogle="tooltip" th:title="#{model.list.finish.sort}"></th>
                             <th id="cellNewVehicleModelYear" class="text-center" th:text="#{model.list.year}" data-toogle="tooltip" th:title="#{model.list.year.sort}"></th>
                             <th id="cellNewVehicleSellPrice" class="text-center" th:text="#{new.vehicle.sell.price}" data-toogle="tooltip" th:title="#{new.vehicle.sell.price.sort}"></th>
-                            <th id="cellNewVehicleBillingDate" class="text-center" th:text="#{new.vehicle.billing.date}" data-toogle="tooltip" th:title="#{new.vehicle.billing.date.sort}"></th>
                             <th id="cellNewVehicleStatus" class="text-center" th:text="#{new.vehicle.status}" data-toogle="tooltip" th:title="#{new.vehicle.status.sort}"></th>
                             <th id="cellNewVehicleEdit" class="text-center" th:text="#{table.header.edit}"></th>
                             <th id="cellNewVehicleDelete" class="text-center" th:text="#{table.header.delete}"></th>
@@ -88,7 +87,6 @@
                             <td headers="cellNewVehicleModelFinish" class="text-center align-center-vertical" th:text="${row.model.finish}"></td>
                             <td headers="cellNewVehicleModelYear" class="text-center align-center-vertical" th:text="${row.model.year}"></td>
                             <td headers="cellNewVehicleSellPrice" class="text-center align-center-vertical" th:text="${row.sellPrice}"></td>
-                            <td headers="cellNewVehicleBillingDate" class="text-center align-center-vertical" th:text="${#dates.format(row.billingDate, 'dd-MM-yyyy')}"></td>
                             <td headers="cellNewVehicleStatus" class="text-center align-center-vertical" th:text="${row.status.name}"></td>
                             <td headers="cellNewVehicleEdit" class="text-center align-center-vertical">
                                 <a th:href="@{/vehicles/newVehicle/edit/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
