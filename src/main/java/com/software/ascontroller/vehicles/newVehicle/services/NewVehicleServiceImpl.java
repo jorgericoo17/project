@@ -33,6 +33,7 @@ public class NewVehicleServiceImpl implements NewVehicleService{
     }
 
     @Override
+    @Transactional(readOnly = false)
     public NewVehicle save(NewVehicle newVehicle) {
         return this.newVehicleRepository.save(newVehicle);
     }
@@ -50,7 +51,9 @@ public class NewVehicleServiceImpl implements NewVehicleService{
         newVehicle.setPlate(newVehicleDTO.getPlate());
         newVehicle.setSellPrice(newVehicleDTO.getSellPrice());
         newVehicle.setModel(newVehicleDTO.getModel());
+        newVehicle.setStatus(newVehicleDTO.getStatus());
+        newVehicle.setBillingDate(newVehicleDTO.getBillingDate());
 
-        return null;
+        return newVehicle;
     }
 }

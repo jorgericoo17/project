@@ -36,12 +36,12 @@ public class NewVehicle implements Serializable {
     private Double sellPrice;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "BILLING_DATE")
     private Date billingDate;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "SELLING_DATE")
     private Date sellingDate;
 

@@ -29,7 +29,7 @@ public class VehicleController {
     private void loadVehicleScreen(Model model) {
         LOGGER.info("Beginning of the vehicles screen load");
         this.loadCommonAtributtesNavbar(model);
-        LOGGER.info("End if the vehicles screen load");
+        LOGGER.info("End of the vehicles screen load");
     }
 
     private void loadCommonAtributtesNavbar(Model model) {
