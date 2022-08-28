@@ -80,7 +80,7 @@
                             <th id="cellNewVehicleSellPrice" class="text-center" th:text="#{new.vehicle.sell.price}" data-toogle="tooltip" th:title="#{new.vehicle.sell.price.sort}"></th>
                             <th id="cellNewVehicleStatus" class="text-center" th:text="#{new.vehicle.status}" data-toogle="tooltip" th:title="#{new.vehicle.status.sort}"></th>
                             <th id="cellNewVehicleEdit" class="text-center" th:text="#{table.header.edit}"></th>
-                            <th id="cellNewVehicleDelete" class="text-center" th:text="#{table.header.delete}"></th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" id="cellNewVehicleDelete" class="text-center" th:text="#{table.header.delete}"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -97,7 +97,7 @@
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </a>
                             </td>
-                            <td headers="cellNewVehicleDelete" class="text-center align-center-vertical">
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" headers="cellNewVehicleDelete" class="text-center align-center-vertical">
                                 <a th:href="@{/vehicles/newVehicle/delete/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
                                     <i class="fa fa-trash"></i>
                                 </a>
