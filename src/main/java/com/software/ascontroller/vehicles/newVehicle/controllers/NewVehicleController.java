@@ -9,6 +9,7 @@ import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
 import com.software.ascontroller.vehicles.newVehicle.services.NewVehicleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,30 @@ public class NewVehicleController {
                                  RedirectAttributes ra) {
         NewVehicle newVehicle = this.newVehicleService.getNewVehicleFromDTO(newVehicleDTO);
         return this.saveAndRedirect(newVehicle, ra);
+    }
+
+    @GetMapping("/add")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+    public String addNewVehicle(Model model) {
+        this.loadAddNewVehicleScreen(model);
+        return "vehicles/newVehicle/addNewVehicle";
+    }
+
+    @GetMapping("/delete/{idNewVehicle}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+    public String deleteNewVehicle(@PathVariable("idNewVehicle") Long idNewVehicle,
+                                   RedirectAttributes ra) {
+        NewVehicle newVehicle = this.newVehicleService.findById(idNewVehicle).get();
+        this.newVehicleService.delete(newVehicle);
+        ra.addFlashAttribute("messageOK", "Se ha borrado el vehiculo " + newVehicle.getModel().toString() );
+
+        return "redirect:/vehicles/newVehicle/list";
+    }
+
+    private void loadAddNewVehicleScreen(Model model) {
+        this.loadCommonAtributtesNavbar(model);
+        this.loadModelAndStatusAtributtes(model);
+        model.addAttribute("newVehicleDTO", new NewVehicleDTO());
     }
 
     private String saveAndRedirect(NewVehicle newVehicle,

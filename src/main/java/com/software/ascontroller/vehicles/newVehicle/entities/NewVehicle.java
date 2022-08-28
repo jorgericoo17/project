@@ -7,6 +7,8 @@ import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -21,6 +23,7 @@ public class NewVehicle implements Serializable {
 
     @Id
     @SequenceGenerator(name = "NEW_VEHICLE_IDNEW_VEHICLE", sequenceName = "NewVehicle_idNewVehicle_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDNEW_VEHICLE", unique = true, nullable = false)
     private Long idNewVehicle;
 

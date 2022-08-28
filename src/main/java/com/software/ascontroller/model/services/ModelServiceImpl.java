@@ -54,4 +54,10 @@ public class ModelServiceImpl implements ModelService {
     public Model save(Model model) {
         return this.modelRepository.save(model);
     }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void delete(Model model) {
+        this.modelRepository.delete(model);
+    }
 }

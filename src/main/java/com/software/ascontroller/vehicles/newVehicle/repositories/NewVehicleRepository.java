@@ -13,4 +13,6 @@ public interface NewVehicleRepository extends JpaRepository<NewVehicle, Long> {
 
     @Query("FROM NewVehicle nv WHERE nv.status.idStatus LIKE 3")
     List<NewVehicle> findAllSold();
+    @Query("FROM NewVehicle nv WHERE nv.model.idModel = :idModel")
+    List<NewVehicle> findByIdModel(Long idModel);
 }

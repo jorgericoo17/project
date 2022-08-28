@@ -6,6 +6,8 @@ import com.software.ascontroller.model.search.ModelFilter;
 import com.software.ascontroller.model.search.ModelSpecifications;
 import com.software.ascontroller.model.services.ModelService;
 import com.software.ascontroller.user.entites.User;
+import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
+import com.software.ascontroller.vehicles.newVehicle.services.NewVehicleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +33,8 @@ public class ConfigurationModelsController {
 
     @Autowired
     private ModelService modelService;
+    @Autowired
+    private NewVehicleService newVehicleService;
 
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
@@ -91,6 +95,11 @@ public class ConfigurationModelsController {
                               RedirectAttributes ra) {
         Optional<com.software.ascontroller.model.entities.Model> modelOptional = this.modelService.findById(idModel);
         if (modelOptional.isPresent()) {
+            List<NewVehicle> newVehicleList = this.newVehicleService.findByIdModel(modelOptional.get().getIdModel());
+            for(NewVehicle newVehicle : newVehicleList) {
+                this.newVehicleService.delete(newVehicle);
+            }
+            this.modelService.delete(modelOptional.get());
             ra.addFlashAttribute("messageOK", "Se ha borrado el modelo");
         } else {
             ra.addFlashAttribute("messageError", "Error borrando el modelo");

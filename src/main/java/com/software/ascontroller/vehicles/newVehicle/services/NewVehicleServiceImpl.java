@@ -52,4 +52,15 @@ public class NewVehicleServiceImpl implements NewVehicleService{
 
         return newVehicle;
     }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void delete(NewVehicle newVehicle) {
+        this.newVehicleRepository.delete(newVehicle);
+    }
+
+    @Override
+    public List<NewVehicle> findByIdModel(Long idModel) {
+        return this.newVehicleRepository.findByIdModel(idModel);
+    }
 }

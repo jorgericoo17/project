@@ -18,4 +18,7 @@ public interface NewVehicleService {
 
     NewVehicle getNewVehicleFromDTO(NewVehicleDTO newVehicleDTO);
 
+    void delete(NewVehicle newVehicle);
+
+    List<NewVehicle> findByIdModel(Long idModel);
 }

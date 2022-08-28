@@ -19,4 +19,6 @@ public interface ModelService {
     Model getModelFromDTO(ModelDTO modelDTO);
 
     Model save(Model model);
+
+    void delete(Model model);
 }

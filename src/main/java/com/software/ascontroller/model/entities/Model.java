@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -30,4 +31,8 @@ public class Model implements Serializable {
     @Column(name="FINISH")
     private String finish;
 
+    @Override
+    public String toString() {
+        return name + " " + finish + " " + year;
+    }
 }

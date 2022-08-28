@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{new.vehicle.edit}"></title>
+    <title th:text="#{new.vehicle.add.legend}"></title>
     <div th:include="/common/libraries-fragment"></div>
     <link rel="stylesheet" type="text/css" href="/css/common/common.css">
     <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
@@ -15,25 +15,25 @@
 <main id="main">
     <div class="container-fuild main-content">
         <fieldset>
-            <legend th:text="#{new.vehicle.edit}"></legend>
+            <legend th:text="#{new.vehicle.add.legend}"></legend>
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
                     <form class="was-validated" th:action="@{/vehicles/newVehicle/save}" th:object="${newVehicleDTO}" method="POST">
-                        <input type="hidden" th:field="*{idNewVehicle}">
-                        <input type="hidden" th:field="*{model}">
-
                         <div class="row">
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                                <label for="model" class="form-label" th:text="#{new.vehicle.model}"></label>
-                                <input type="text" class="form-control" th:value="${newVehicleDTO.model.toString()}" th:placeholder="#{new.vehicle.plate.placeholder}" readonly>
+                                <label class="form-label" for="status" th:text="#{new.vehicle.model}"></label>
+                                <select class="form-select" name="model" required>
+                                    <option selected value="" th:text="#{select.option.default}"></option>
+                                    <option th:each="model : ${modelList}" th:value="${model.idModel}" th:text="${model.toString()}"></option>
+                                </select>
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="chassisNumber" th:text="#{new.vehicle.chassis.number}"></label>
-                                <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}" readonly>
+                                <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}" required>
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="plate" th:text="#{new.vehicle.plate}"></label>
-                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" readonly>
+                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" required>
                             </div>
                             <div class="form-group date col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="sellPrice" th:text="#{new.vehicle.sell.price}"></label>
