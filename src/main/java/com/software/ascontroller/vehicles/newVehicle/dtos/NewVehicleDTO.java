@@ -12,10 +12,12 @@ import java.util.Date;
 @Setter
 public class NewVehicleDTO {
 
-    Long idNewVehicle;
+    private Long idNewVehicle;
     private String chassisNumber;
     private String plate;
+    private Double cost;
     private Double sellPrice;
     private Model model;
     private Status status;
+    private Boolean isNew;
 }

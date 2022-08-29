@@ -52,7 +52,9 @@ public class NewVehicleServiceImpl implements NewVehicleService{
         newVehicle.setPlate(newVehicleDTO.getPlate());
         newVehicle.setSellPrice(newVehicleDTO.getSellPrice());
         newVehicle.setModel(newVehicleDTO.getModel());
+        newVehicle.setCost((newVehicleDTO.getCost()));
         newVehicle.setStatus(newVehicleDTO.getStatus());
+        newVehicle.setIsNew(newVehicleDTO.getIsNew());
 
         return newVehicle;
     }

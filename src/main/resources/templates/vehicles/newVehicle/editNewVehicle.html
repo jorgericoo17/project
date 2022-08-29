@@ -23,29 +23,41 @@
                         <input type="hidden" th:field="*{model}">
 
                         <div class="row">
-                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                            <div class="form-group col-xs-12 col-md-4 col-lg-4">
                                 <label for="model" class="form-label" th:text="#{new.vehicle.model}"></label>
                                 <input type="text" class="form-control" th:value="${newVehicleDTO.model.toString()}" th:placeholder="#{new.vehicle.plate.placeholder}" readonly>
                             </div>
-                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                            <div class="form-group col-xs-12 col-md-4 col-lg-4">
                                 <label class="form-label" for="chassisNumber" th:text="#{new.vehicle.chassis.number}"></label>
                                 <input type="text" class="form-control" th:field="*{chassisNumber}" th:placeholder="#{new.vehicle.chassis.number.placeholder}" readonly>
                             </div>
-                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                            <div class="form-group col-xs-12 col-md-4 col-lg-4">
                                 <label class="form-label" for="plate" th:text="#{new.vehicle.plate}"></label>
                                 <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group date col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="cost" th:text="#{new.vehicle.cost}"></label>
+                                <input type="number" min=0 step="any" class="form-control" th:field="*{cost}" th:placeholder="#{new.vehicle.cost.placeholder}" readonly>
                             </div>
                             <div class="form-group date col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="sellPrice" th:text="#{new.vehicle.sell.price}"></label>
                                 <input type="number" min=0 step="any" class="form-control" th:field="*{sellPrice}" th:placeholder="#{new.vehicle.sell.price.placeholder}" required>
                             </div>
-                        </div>
-                        <div class="row mt-2">
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="status" th:text="#{new.vehicle.status}"></label>
-                                <select class="form-select" name="status" required>
+                                <select class="form-select" th:field="*{status}" required>
                                     <option selected value="" th:text="#{select.option.default}"></option>
                                     <option th:each="status : ${statusList}" th:if="${status.idStatus != 3}" th:value="${status.idStatus}" th:text="${status.name}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                                <label class="form-label" for="isNew" th:text="#{new.vehicle.isNew}"></label>
+                                <select class="form-select" th:field="*{isNew}" required>
+                                    <option selected value="" th:text="#{select.option.default}"></option>
+                                    <option value=1>Nuevo</option>
+                                    <option value=0>Usado</option>
                                 </select>
                             </div>
                         </div>

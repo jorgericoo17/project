@@ -29,7 +29,7 @@
                         <i class="fa fa-home" aria-hidden="true"></i>
                         <span th:text="#{aside.menu.inicio}" class="nav_name"></span>
                     </a>
-                    <a th:href="@{/vehicles}" class="nav_link" th:classappend="${navLink} == 'vehicles' ? 'active' : ''">
+                    <a th:href="@{/vehicles/newVehicle/list}" class="nav_link" th:classappend="${navLink} == 'vehicles' ? 'active' : ''">
                         <i class="fa fa-car" aria-hidden="true"></i>
                         <span th:text="#{aside.menu.vehicles}" class="nav_name"></span>
                     </a>

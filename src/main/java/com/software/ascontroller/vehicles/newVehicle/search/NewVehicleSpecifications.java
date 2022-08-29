@@ -35,6 +35,9 @@ public class NewVehicleSpecifications {
 
                 this.addPredicateIfNotEmpty(filter.getChassisNumber(),"chassisNumber", root, builder, predicates);
                 this.addPredicateIfNotEmpty(filter.getPlate(), "plate", root, builder, predicates);
+                if(filter.getIsNew() != null) {
+                    predicates.add(builder.equal(root.get("isNew"), filter.getIsNew()));
+                }
                 this.addJoinPredicate(filter, root, builder, predicates);
             }
 

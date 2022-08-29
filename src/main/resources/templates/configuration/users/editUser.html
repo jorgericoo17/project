@@ -39,7 +39,7 @@
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="role" th:text="#{user.list.role}"></label>
-                                <select class="form-select" name="role" required>
+                                <select class="form-select" th:field="*{role}" required>
                                     <option selected disabled value="" th:text="#{select.option.default}"></option>
                                     <option th:each="row : ${roles}" th:value="${row.idRole}" th:text="${row.name}"></option>
                                 </select>

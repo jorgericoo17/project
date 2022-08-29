@@ -13,5 +13,6 @@ public class NewVehicleFilter {
     private String plate;
     private Long idModel;
     private Long idStatus;
+    private Boolean isNew;
 
 }

@@ -35,8 +35,14 @@ public class NewVehicle implements Serializable {
     @Column(name = "PLATE")
     private String plate;
 
+    @Column(name = "COST")
+    private Double cost;
+
     @Column(name = "SELL_PRICE")
     private Double sellPrice;
+
+    @Column(name = "NEW")
+    private Boolean isNew;
 
     @NotNull
     @ManyToOne
