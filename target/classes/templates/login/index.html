@@ -12,6 +12,7 @@
 
     <main id="main">
         <div class="container-fuild main-content">
+            <div th:if="${messageError}" th:text="#{login.error}" class="alert alert-danger mt-2" role="alert"></div>
             <form th:action="@{/login}" method="post">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
