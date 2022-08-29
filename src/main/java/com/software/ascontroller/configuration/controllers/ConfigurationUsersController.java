@@ -3,6 +3,7 @@ package com.software.ascontroller.configuration.controllers;
 import com.software.ascontroller.language.LanguageEnum;
 import com.software.ascontroller.role.entities.Role;
 import com.software.ascontroller.role.services.RoleService;
+import com.software.ascontroller.user.customUserDetails.CustomUserDetails;
 import com.software.ascontroller.user.dtos.UserDTO;
 import com.software.ascontroller.user.entites.User;
 import com.software.ascontroller.user.search.UserFilter;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.SortDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,15 +46,17 @@ public class ConfigurationUsersController {
     @GetMapping("/list")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String usersList(Model model,
-                            Pageable pageable) {
-        this.loadUsersListScreen(model, pageable);
+                            Pageable pageable,
+                            Authentication authentication) {
+        this.loadUsersListScreen(model,authentication, pageable);
         return "/configuration/users/list";
     }
 
     private void loadUsersListScreen(Model model,
+                                     Authentication authentication,
                                      Pageable pageable) {
         LOGGER.info("Beginning of the userList screen load");
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         this.showAlertMessages(model);
         this.loadAttributtesUsersListScreen(model, pageable);
         LOGGER.info("End of the usersList screen load");
@@ -74,17 +78,19 @@ public class ConfigurationUsersController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String searchUsers(Model model,
                               @ModelAttribute("userFilter") UserFilter userFilter,
+                              Authentication authentication,
                               @SortDefault("username") Pageable pageable) {
-        this.loadAttributtesSearchScreen(model, userFilter, pageable);
+        this.loadAttributtesSearchScreen(model, userFilter, authentication, pageable);
         return "/configuration/users/list";
     }
 
     private void loadAttributtesSearchScreen(Model model,
                                         UserFilter userFilter,
+                                        Authentication authentication,
                                         Pageable pageable) {
         LOGGER.info("Beginning of the advanced user search with params {}", userFilter);
         this.loadRoleAttributtes(model);
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         model.addAttribute("users",this.userService.search(userFilter, pageable));
         LOGGER.info("End of the advanced user search with params");
     }
@@ -102,8 +108,9 @@ public class ConfigurationUsersController {
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addUser(Model model,
-                          @ModelAttribute("userDTO") UserDTO userDTO) {
-        this.loadAddUserScreen(model);
+                          @ModelAttribute("userDTO") UserDTO userDTO,
+                          Authentication authentication) {
+        this.loadAddUserScreen(model, authentication);
         return "/configuration/users/user";
     }
 
@@ -125,9 +132,10 @@ public class ConfigurationUsersController {
         return "redirect:/configuration/users/list";
     }
 
-    private void loadAddUserScreen(Model model) {
+    private void loadAddUserScreen(Model model,
+                                   Authentication authentication) {
         LOGGER.info("Beginning of the userAdd screen load");
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         List<Role> roles = this.roleService.findAll();
         model.addAttribute("roles",roles);
         LOGGER.info("End of the the userAdd screen load");
@@ -136,15 +144,17 @@ public class ConfigurationUsersController {
     @GetMapping("/edit/{idUser}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editUser(Model model,
-                           @PathVariable(required = true, value = "idUser") Long idUser) {
-        this.loadEditUserScreen(model, idUser);
+                           @PathVariable(required = true, value = "idUser") Long idUser,
+                           Authentication authentication) {
+        this.loadEditUserScreen(model, idUser, authentication);
         return "/configuration/users/editUser";
     }
 
     private void loadEditUserScreen(Model model,
-                                    Long idUser) {
+                                    Long idUser,
+                                    Authentication authentication) {
         LOGGER.info("Beginning of the user edit for user [idUser={}]", idUser);
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         this.loadRoleAttributtes(model);
         User user = this.userService.findById(idUser).get();
         UserDTO userDTO = new UserDTO();
@@ -177,8 +187,11 @@ public class ConfigurationUsersController {
         return this.userService.getNewUsername();
     }
 
-    private void loadCommonAtributtesNavbar(Model model) {
+    private void loadCommonAtributtesNavbar(Model model,
+                                            Authentication authentication) {
         List<LanguageEnum> languages = new ArrayList<>(EnumSet.allOf(LanguageEnum.class));
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        model.addAttribute("idUser", user.getIdUser());
         model.addAttribute("languages",languages);
         model.addAttribute("navLink", "configuration");
     }

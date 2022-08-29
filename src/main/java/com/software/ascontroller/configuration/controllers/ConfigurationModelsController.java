@@ -5,6 +5,7 @@ import com.software.ascontroller.model.dtos.ModelDTO;
 import com.software.ascontroller.model.search.ModelFilter;
 import com.software.ascontroller.model.search.ModelSpecifications;
 import com.software.ascontroller.model.services.ModelService;
+import com.software.ascontroller.user.customUserDetails.CustomUserDetails;
 import com.software.ascontroller.user.entites.User;
 import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
 import com.software.ascontroller.vehicles.newVehicle.services.NewVehicleService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,14 +40,16 @@ public class ConfigurationModelsController {
 
     @GetMapping("/list")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
-    public String modelList(Model model) {
-        this.loadModelListScreen(model);
+    public String modelList(Model model,
+                            Authentication authentication) {
+        this.loadModelListScreen(model, authentication);
         return "/configuration/models/list";
     }
 
-    private void loadModelListScreen(Model model) {
+    private void loadModelListScreen(Model model,
+                                     Authentication authentication) {
         LOGGER.info("Beginning of the modelList screen load");
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         this.showAlertMessages(model);
         model.addAttribute("models", this.modelService.findAll());
         model.addAttribute("modelFilter", new ModelFilter());
@@ -55,9 +59,10 @@ public class ConfigurationModelsController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     public String search(Model model,
                          @ModelAttribute("modelFilter") ModelFilter modelFilter,
-                         Pageable pageable) {
+                         Pageable pageable,
+                         Authentication authentication) {
 
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         model.addAttribute("models", this.modelService.findAll(modelFilter, pageable));
         return "/configuration/models/list";
     }
@@ -65,8 +70,9 @@ public class ConfigurationModelsController {
     @GetMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     public String addModel(Model model,
-                           @ModelAttribute("modelDTO") ModelDTO modelDTO) {
-        this.loadCommonAtributtesNavbar(model);
+                           @ModelAttribute("modelDTO") ModelDTO modelDTO,
+                           Authentication authentication) {
+        this.loadCommonAtributtesNavbar(model, authentication);
         return "/configuration/models/addModel";
     }
 
@@ -111,21 +117,26 @@ public class ConfigurationModelsController {
     @GetMapping("/edit/{idModel}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     public String editModel(Model model,
-                            @PathVariable("idModel") Long idModel) {
-        this.loadEditModelScreen(model, idModel);
+                            @PathVariable("idModel") Long idModel,
+                            Authentication authentication) {
+        this.loadEditModelScreen(model, idModel, authentication);
         return "/configuration/models/editModel";
     }
 
     private void loadEditModelScreen(Model model,
-                                Long idModel) {
-        this.loadCommonAtributtesNavbar(model);
+                                    Long idModel,
+                                     Authentication authentication) {
+        this.loadCommonAtributtesNavbar(model, authentication);
         com.software.ascontroller.model.entities.Model objectModel = this.modelService.findById(idModel).get();
         ModelDTO modelDTO = new ModelDTO();
         BeanUtils.copyProperties(objectModel, modelDTO);
         model.addAttribute("modelDTO", modelDTO);
     }
-    private void loadCommonAtributtesNavbar(Model model) {
+    private void loadCommonAtributtesNavbar(Model model,
+                                            Authentication authentication) {
         List<LanguageEnum> languages = new ArrayList<>(EnumSet.allOf(LanguageEnum.class));
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        model.addAttribute("idUser", user.getIdUser());
         model.addAttribute("languages",languages);
         model.addAttribute("navLink", "configuration");
     }

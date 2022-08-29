@@ -1,4 +1,4 @@
-package com.software.ascontroller.home.controllers;
+package com.software.ascontroller.sells.controllers;
 
 import com.software.ascontroller.language.LanguageEnum;
 import com.software.ascontroller.user.customUserDetails.CustomUserDetails;
@@ -13,31 +13,29 @@ import java.util.EnumSet;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
-public class HomeController {
+@RequestMapping("/sells")
+public class SellController {
 
-    @RequestMapping
-    public String index(Model model,
-                      Authentication authentication) {
-        loadHomeScreen(model, authentication);
+    @GetMapping
+    public String sells(Model model,
+                        Authentication authentication) {
 
-        return "index";
+        return "/sells/sells";
     }
 
-    private void loadHomeScreen(Model model, Authentication authentication) {
+    private void loadSellsScreen(Model model,
+                            Authentication authentication) {
+
+        this.loadCommonAtributtesNavbar(model, authentication);
+
+    }
+
+    private void loadCommonAtributtesNavbar(Model model,
+                                            Authentication authentication) {
         List<LanguageEnum> languages = new ArrayList<>(EnumSet.allOf(LanguageEnum.class));
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
         model.addAttribute("idUser", user.getIdUser());
         model.addAttribute("languages",languages);
-        model.addAttribute("username", user.getName());
-        model.addAttribute("navLink","home");
+        model.addAttribute("navLink", "sells");
     }
-
-    @GetMapping("/home")
-    public String login (Model model, Authentication authentication) {
-        loadHomeScreen(model, authentication);
-        return "/home/index";
-    }
-
-
 }

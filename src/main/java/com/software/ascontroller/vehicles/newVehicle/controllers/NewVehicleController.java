@@ -4,6 +4,7 @@ import com.software.ascontroller.language.LanguageEnum;
 import com.software.ascontroller.model.services.ModelService;
 import com.software.ascontroller.status.entities.Status;
 import com.software.ascontroller.status.services.StatusService;
+import com.software.ascontroller.user.customUserDetails.CustomUserDetails;
 import com.software.ascontroller.vehicles.newVehicle.dtos.NewVehicleDTO;
 import com.software.ascontroller.vehicles.newVehicle.entities.NewVehicle;
 import com.software.ascontroller.vehicles.newVehicle.search.NewVehicleFilter;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,32 +36,36 @@ public class NewVehicleController {
     private NewVehicleService newVehicleService;
 
     @GetMapping("/list")
-    public String newVehicleList(Model model) {
-        this.loadNewVehicleListScreen(model);
+    public String newVehicleList(Model model,
+                                 Authentication authentication) {
+        this.loadNewVehicleListScreen(model, authentication);
         return "/vehicles/newVehicle/newVehicleList";
     }
 
     @GetMapping("/search")
     public String searchNewVehicless(Model model,
                                      @ModelAttribute("newVehicleFilter") NewVehicleFilter newVehicleFilter,
-                                     Pageable pageable) {
+                                     Pageable pageable,
+                                     Authentication authentication) {
 
-        this.loadSearchScreen(model, newVehicleFilter, pageable);
+        this.loadSearchScreen(model, newVehicleFilter, pageable, authentication);
 
         return "/vehicles/newVehicle/newVehicleList";
     }
 
     private void loadSearchScreen(Model model,
                                   NewVehicleFilter newVehicleFilter,
-                                  Pageable pageable) {
-        this.loadCommonAtributtesNavbar(model);
+                                  Pageable pageable,
+                                  Authentication authentication) {
+        this.loadCommonAtributtesNavbar(model, authentication);
         this.loadModelAndStatusAtributtes(model);
         model.addAttribute("newVehicleList", this.newVehicleService.findAll(newVehicleFilter,pageable));
     }
     @GetMapping("/edit/{idNewVehicle}")
     public String editNewVehicle(Model model,
-                                 @PathVariable("idNewVehicle") Long idNewVehicle) {
-        this.loadEditNewVehicleScreen(model,idNewVehicle);
+                                 @PathVariable("idNewVehicle") Long idNewVehicle,
+                                 Authentication authentication) {
+        this.loadEditNewVehicleScreen(model,idNewVehicle, authentication);
         return "/vehicles/newVehicle/editNewVehicle";
     }
 
@@ -72,8 +78,9 @@ public class NewVehicleController {
 
     @GetMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
-    public String addNewVehicle(Model model) {
-        this.loadAddNewVehicleScreen(model);
+    public String addNewVehicle(Model model,
+                                Authentication authentication) {
+        this.loadAddNewVehicleScreen(model, authentication);
         return "vehicles/newVehicle/addNewVehicle";
     }
 
@@ -88,8 +95,9 @@ public class NewVehicleController {
         return "redirect:/vehicles/newVehicle/list";
     }
 
-    private void loadAddNewVehicleScreen(Model model) {
-        this.loadCommonAtributtesNavbar(model);
+    private void loadAddNewVehicleScreen(Model model,
+                                         Authentication authentication) {
+        this.loadCommonAtributtesNavbar(model, authentication);
         this.loadModelAndStatusAtributtes(model);
         model.addAttribute("newVehicleDTO", new NewVehicleDTO());
     }
@@ -102,23 +110,25 @@ public class NewVehicleController {
     }
 
     private void loadEditNewVehicleScreen(Model model,
-                                          Long idNewVehicle) {
+                                          Long idNewVehicle,
+                                          Authentication authentication) {
 
         NewVehicle newVehicle = this.newVehicleService.findById(idNewVehicle).get();
         NewVehicleDTO newVehicleDTO = new NewVehicleDTO();
         BeanUtils.copyProperties(newVehicle,newVehicleDTO);
         model.addAttribute("newVehicleDTO", newVehicleDTO);
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         this.loadModelAndStatusAtributtes(model);
         this.showAlertMessages(model);
     }
 
-    private void loadNewVehicleListScreen(Model model) {
+    private void loadNewVehicleListScreen(Model model,
+                                          Authentication authentication) {
         model.addAttribute("newVehicleFilter", new NewVehicleFilter());
         List<NewVehicle> newVehicleList = this.newVehicleService.findAllInStock();
         model.addAttribute("newVehicleList", newVehicleList);
         this.loadModelAndStatusAtributtes(model);
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
     }
 
     private void loadModelAndStatusAtributtes(Model model) {
@@ -129,8 +139,11 @@ public class NewVehicleController {
 
     }
 
-    private void loadCommonAtributtesNavbar(Model model) {
+    private void loadCommonAtributtesNavbar(Model model,
+                                            Authentication authentication) {
         List<LanguageEnum> languages = new ArrayList<>(EnumSet.allOf(LanguageEnum.class));
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        model.addAttribute("idUser", user.getIdUser());
         model.addAttribute("languages",languages);
         model.addAttribute("navLink", "vehicles");
     }

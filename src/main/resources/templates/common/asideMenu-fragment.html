@@ -33,11 +33,11 @@
                         <i class="fa fa-car" aria-hidden="true"></i>
                         <span th:text="#{aside.menu.vehicles}" class="nav_name"></span>
                     </a>
-                    <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" th:href="@{/sells}" class="nav_link" th:classappend="${navLink} == 'vehicles' ? 'active' : ''">
+                    <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" th:href="@{/sells}" class="nav_link" th:classappend="${navLink} == 'sell' ? 'active' : ''">
                         <i class="fa fa-euro" aria-hidden="true"></i>
                         <span th:text="#{aside.menu.sells}" class="nav_name"></span>
                     </a>
-                    <a sec:authorize="hasRole('ROLE_SELLER')" th:href="@{/sells/{idSeller}" class="nav_link" th:classappend="${navLink} == 'vehicles' ? 'active' : ''">
+                    <a sec:authorize="hasRole('ROLE_SELLER')" th:href="@{/sells/{idSeller}(idSeller=${idUser})}" class="nav_link" th:classappend="${navLink} == 'sell' ? 'active' : ''">
                         <i class="fa fa-euro" aria-hidden="true"></i>
                         <span th:text="#{aside.menu.sells}" class="nav_name"></span>
                     </a>

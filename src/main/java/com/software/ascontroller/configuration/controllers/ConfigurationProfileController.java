@@ -30,7 +30,7 @@ public class ConfigurationProfileController {
                                  Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         model.addAttribute("idUser", userDetails.getIdUser());
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
         return "/configuration/profile/options";
     }
 
@@ -43,26 +43,30 @@ public class ConfigurationProfileController {
         User user = userService.findById(userDetails.getIdUser()).get();
         BeanUtils.copyProperties(user, userDTO);
         model.addAttribute("userDTO", userDTO);
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
 
         return "/configuration/profile/nameProfile";
     }
 
     @GetMapping("/passwdProfile/{idUser}")
     public String passwdProfileConfiguration(Model model,
-                                             @PathVariable("idUser") Long idUser) {
+                                             @PathVariable("idUser") Long idUser,
+                                             Authentication authentication) {
 
         UserDTO userDTO = new UserDTO();
         User user = userService.findById(idUser).get();
         BeanUtils.copyProperties(user, userDTO);
         model.addAttribute("userDTO", userDTO);
-        this.loadCommonAtributtesNavbar(model);
+        this.loadCommonAtributtesNavbar(model, authentication);
 
         return "/configuration/profile/passwdProfile";
     }
 
-    private void loadCommonAtributtesNavbar(Model model) {
+    private void loadCommonAtributtesNavbar(Model model,
+                                            Authentication authentication) {
         List<LanguageEnum> languages = new ArrayList<>(EnumSet.allOf(LanguageEnum.class));
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        model.addAttribute("idUser", user.getIdUser());
         model.addAttribute("languages",languages);
         model.addAttribute("navLink", "configuration");
     }
