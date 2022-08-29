@@ -37,7 +37,7 @@
                         <i class="fa fa-euro" aria-hidden="true"></i>
                         <span th:text="#{aside.menu.sells}" class="nav_name"></span>
                     </a>
-                    <a sec:authorize="hasRole('ROLE_SELLER')" th:href="@{/sells/{idSeller}(idSeller=${idUser})}" class="nav_link" th:classappend="${navLink} == 'sell' ? 'active' : ''">
+                    <a sec:authorize="hasRole('ROLE_SELLER')" th:href="@{/sells/user}" class="nav_link" th:classappend="${navLink} == 'sell' ? 'active' : ''">
                         <i class="fa fa-euro" aria-hidden="true"></i>
                         <span th:text="#{aside.menu.sells}" class="nav_name"></span>
                     </a>

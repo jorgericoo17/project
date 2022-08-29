@@ -52,6 +52,17 @@ public class SellController {
         return "/sells/addSell";
     }
 
+    @GetMapping("/user")
+    public String userSells(Model model,
+                            Authentication authentication) {
+
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        model.addAttribute("sellsList",this.sellService.findByIdUser(user.getIdUser()));
+        this.loadCommonAtributtesNavbar(model, authentication);
+
+        return "sells/sells";
+    }
+
     @PostMapping("/save")
     public String saveSell(Model model,
                            @ModelAttribute("sellDTO") SellDTO sellDTO,

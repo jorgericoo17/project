@@ -11,4 +11,6 @@ public interface SellRepository extends JpaRepository<Sell, Long> {
 
     @Query(value = "DELETE FROM sell WHERE IDNEW_VEHICLE = :idNewVehicle", nativeQuery = true)
     void deleteByIdNewVehicle(@Param("") Long idNewVechile);
+
+    Sell findBySellerIdUser(Long idUser);
 }

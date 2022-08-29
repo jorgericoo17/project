@@ -13,4 +13,6 @@ public interface SellService {
     List<Sell> findAll();
 
     void deleteByIdNewVehicle(Long idNewVehicle);
+
+    Sell findByIdUser(Long idUser);
 }

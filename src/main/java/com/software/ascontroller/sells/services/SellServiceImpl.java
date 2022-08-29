@@ -45,4 +45,9 @@ public class SellServiceImpl implements SellService{
     public void deleteByIdNewVehicle(Long idNewVehicle) {
         this.sellRepository.deleteByIdNewVehicle(idNewVehicle);
     }
+
+    @Override
+    public Sell findByIdUser(Long idUser) {
+        return null;
+    }
 }
