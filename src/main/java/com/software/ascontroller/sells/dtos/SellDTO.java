@@ -15,7 +15,6 @@ public class SellDTO {
     private String buyerName;
     private String buyerDni;
     private Double profit;
-    private Date date;
     private User seller;
     private NewVehicle newVehicle;
 

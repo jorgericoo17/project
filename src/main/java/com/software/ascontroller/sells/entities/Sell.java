@@ -37,6 +37,7 @@ public class Sell implements Serializable {
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Temporal(TemporalType.DATE)
+    @Column(name = "DATE")
     private Date date;
 
     @NotNull

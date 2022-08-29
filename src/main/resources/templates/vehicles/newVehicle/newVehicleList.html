@@ -108,7 +108,7 @@
                             <td headers="cellNewVehicleStatus" class="text-center align-center-vertical" th:text="${row.status.name}"></td>
                             <td headers="cellNewVehicleIsNew" class="text-center align-center-vertical" th:text="${row.isNew ? 'Nuevo' : 'Usado'}"></td>
                             <td headers="cellNewVehicleSell" class="text-center align-center-vertical">
-                                <a th:href="@{/sells/{idNewVehicle}/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
+                                <a th:href="@{/sells/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </a>
                             </td>

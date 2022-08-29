@@ -91,6 +91,7 @@
                             <th id="cellNewVehicleSellPrice" class="text-center" th:text="#{new.vehicle.sell.price}" data-toogle="tooltip" th:title="#{new.vehicle.sell.price.sort}"></th>
                             <th id="cellNewVehicleStatus" class="text-center" th:text="#{new.vehicle.status}" data-toogle="tooltip" th:title="#{new.vehicle.status.sort}"></th>
                             <th id="cellNewVehicleIsNew" class="text-center" th:text="#{new.vehicle.isNew}" data-toogle="tooltip" th:title="#{new.vehicle.isNew.sort}"></th>
+                            <th id="cellNewVehicleSEll" class="text-center" th:text="#{table.header.sell}"></th>
                             <th id="cellNewVehicleEdit" class="text-center" th:text="#{table.header.edit}"></th>
                             <th sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" id="cellNewVehicleDelete" class="text-center" th:text="#{table.header.delete}"></th>
                         </tr>
@@ -106,6 +107,11 @@
                             <td headers="cellNewVehicleSellPrice" class="text-center align-center-vertical" th:text="${row.sellPrice}+'€'"></td>
                             <td headers="cellNewVehicleStatus" class="text-center align-center-vertical" th:text="${row.status.name}"></td>
                             <td headers="cellNewVehicleIsNew" class="text-center align-center-vertical" th:text="${row.isNew ? 'Nuevo' : 'Usado'}"></td>
+                            <td headers="cellNewVehicleSell" class="text-center align-center-vertical">
+                                <a th:href="@{/sells/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </td>
                             <td headers="cellNewVehicleEdit" class="text-center align-center-vertical">
                                 <a th:href="@{/vehicles/newVehicle/edit/{idNewVehicle}(idNewVehicle=${row.idNewVehicle})}">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>

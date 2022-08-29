@@ -7,12 +7,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 public class StatusServiceImpl implements StatusService {
 
     @Autowired
     private StatusRepository statusRepository;
+
+    @Override
+    public Optional<Status> findById(Long idStatus) {
+        return this.statusRepository.findById(idStatus);
+    }
 
     @Override
     public List<Status> findAll() {

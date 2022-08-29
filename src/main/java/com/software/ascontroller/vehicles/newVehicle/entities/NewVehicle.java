@@ -57,4 +57,8 @@ public class NewVehicle implements Serializable {
     @ManyToOne
     @JoinColumn(name = "IDSELLER")
     private User seller;
+
+    public Double calculateProfit() {
+        return this.getSellPrice() - this.getCost();
+    }
 }

@@ -2,6 +2,8 @@ package com.software.ascontroller.vehicles.newVehicle.controllers;
 
 import com.software.ascontroller.language.LanguageEnum;
 import com.software.ascontroller.model.services.ModelService;
+import com.software.ascontroller.sells.controllers.SellController;
+import com.software.ascontroller.sells.services.SellService;
 import com.software.ascontroller.status.entities.Status;
 import com.software.ascontroller.status.services.StatusService;
 import com.software.ascontroller.user.customUserDetails.CustomUserDetails;
@@ -34,6 +36,8 @@ public class NewVehicleController {
     private StatusService statusService;
     @Autowired
     private NewVehicleService newVehicleService;
+    @Autowired
+    private SellService sellService;
 
     @GetMapping("/list")
     public String newVehicleList(Model model,
@@ -89,9 +93,9 @@ public class NewVehicleController {
     public String deleteNewVehicle(@PathVariable("idNewVehicle") Long idNewVehicle,
                                    RedirectAttributes ra) {
         NewVehicle newVehicle = this.newVehicleService.findById(idNewVehicle).get();
+        this.sellService.deleteByIdNewVehicle(newVehicle.getIdNewVehicle());
         this.newVehicleService.delete(newVehicle);
         ra.addFlashAttribute("messageOK", "Se ha borrado el vehiculo " + newVehicle.getModel().toString() );
-
         return "redirect:/vehicles/newVehicle/list";
     }
 

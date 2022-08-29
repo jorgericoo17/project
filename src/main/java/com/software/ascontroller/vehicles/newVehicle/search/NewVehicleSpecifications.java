@@ -59,7 +59,9 @@ public class NewVehicleSpecifications {
 
                 if(!StringUtils.isEmpty(filter.getIdModel())) {
                     Join<NewVehicle, Model> model = root.join("model");
-                    predicates.add(builder.equal(model.get("idModel"), filter.getIdModel()));
+                    if(filter.getIdStatus() != 3) {
+                        predicates.add(builder.equal(model.get("idModel"), filter.getIdModel()));
+                    }
                 }
                 if(!StringUtils.isEmpty(filter.getIdStatus())) {
                     Join<NewVehicle, Status> status = root.join("status");
