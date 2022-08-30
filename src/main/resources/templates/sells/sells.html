@@ -17,7 +17,7 @@
 <main id="main">
     <div class="container-fuild main-content">
         <fieldset>
-            <legend th:text="#{user.list.legend}"></legend>
+            <legend th:text="#{sells.sell.list}"></legend>
             <div class="row" th:if="${sellsList != null}">
                 <div class="col-xs-12 table-responsive mt-3" id="sellList">
 
@@ -29,8 +29,8 @@
                             <th id="cellSellsNewVehicle" class="text-center" th:text="#{model.list.name}" data-toogle="tooltip" th:title="#{model.list.name.sort}"></th>
                             <th id="cellSellsSeller" class="text-center" th:text="#{sells.seller.name}" data-toogle="tooltip" th:title="#{sells.seller.name.sort}"></th>
                             <th id="cellSellsProfit" class="text-center" th:text="#{sells.sell.profit}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
-                            <th id="cellSellsBuyerName" class="text-center" th:text="#{sells.buyer.name}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
-                            <th id="cellSellsBuyerDni" class="text-center" th:text="#{sells.buyer.dni}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
+                            <th id="cellSellsBuyerName" class="text-center" th:text="#{sells.buyer.name}" data-toogle="tooltip" th:title="#{sells.buyer.name.sort}"></th>
+                            <th id="cellSellsBuyerDni" class="text-center" th:text="#{sells.buyer.dni}" data-toogle="tooltip" th:title="#{sells.buyer.dni.sort}"></th>
                             <th sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" id="cellConfigurationUserDelete" class="text-center" th:text="#{table.header.delete}"></th>
                         </tr>
                         </thead>
