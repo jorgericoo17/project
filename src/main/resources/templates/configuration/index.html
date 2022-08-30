@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Configuracion</title>
+    <title th:text="#{configuration.legend}"></title>
     <div th:include="/common/libraries-fragment"></div>
     <link rel="stylesheet" type="text/css" href="/css/common/common.css">
     <link rel="stylesheet" type="text/css" href="/css/common/asideMenu.css">
@@ -28,7 +28,7 @@
                             </h5>
                         </div>
                         <div class="panel-body">
-                            <p class="ms-2 me-2 pt-2"> Apartado para a configuracion de usuarios</p>
+                            <p class="ms-2 me-2 pt-2" th:text="#{configuration.panel.user}"></p>
                             <a th:href="@{/configuration/users/list}" class="btn btn-primary ms-2 mb-2" data-toggle="tooltip" title="Ir a configuracion de usuarios">Acceder</a>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             </h5>
                         </div>
                         <div class="panel-body">
-                            <p class="ms-2 me-2 pt-2"> Apartado para a configuracion de modelos</p>
+                            <p class="ms-2 me-2 pt-2" th:text="#{configuration.panel.model}"></p>
                             <a th:href="@{/configuration/models/list}" class="btn btn-primary ms-2 mb-2" data-toggle="tooltip" title="Ir a configuracion de usuarios">Acceder</a>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             </h5>
                         </div>
                         <div class="panel-body">
-                            <p class="ms-2 me-2 pt-2"> Apartado para a configuracion do perfil</p>
+                            <p class="ms-2 me-2 pt-2" th:text="#{configuration.panel.perfil}"></p>
                             <a th:href="@{/configuration/profile/options}" class="btn btn-primary ms-2 mb-2" data-toggle="tooltip" title="Ir a configuracion de perfil">Acceder</a>
                         </div>
                     </div>

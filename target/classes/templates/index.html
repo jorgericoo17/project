@@ -11,13 +11,16 @@
 <body>
 <div th:include="/common/asideMenu-fragment"></div>
 
-<main id="main">
-  <div class="container-fuild main-content" style="border: 1px solid black">
-    <fieldset>
-      <h1 th:text="#{home.greeting} + ', ' + ${username}"></h1>
-    </fieldset>
-  </div>
-</main>
+<div class="bg-image">
+  <main id="main" style="background-image: url('/home-bg.jpg'); height: 100vh;  background-size: cover; margin-top:64px!important;">
+    <div class="container-fuild main-content text-center">
+      <fieldset>
+        <h1 th:text="#{home.greeting} + ', ' + ${username}" style="color: white"></h1>
+      </fieldset>
+    </div>
+  </main>
+</div>
+
 </body>
 <script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
 <script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>

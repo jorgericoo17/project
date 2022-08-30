@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="pull-right mt-4">
-                <a id="buttonBack" th:href="@{/configuration/users/list}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                <a id="buttonBack" th:href="@{/home}" data-toggle="tooltip" class="btn btn-primary m-b-5">
                     <span class="fa fa-arrow-left"></span>
                     <span th:text="#{button.back}"></span>
                 </a>
@@ -63,7 +63,6 @@
 </body>
 <script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
 <script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
-<script src="/js/buttonBack.js" th:src="@{/js/buttonBack.js}"></script>
 <script>
     $(document).ready(function () {
         let language = '//cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json';
