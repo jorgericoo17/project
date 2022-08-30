@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group col-xs-12 col-md-4 col-lg-4">
                                 <label class="form-label" for="plate" th:text="#{new.vehicle.plate}"></label>
-                                <input type="text" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" required>
+                                <input type="text" maxlength="7" class="form-control" th:field="*{plate}" th:placeholder="#{new.vehicle.plate.placeholder}" required>
                             </div>
                         </div>
                         <div class="row mt-2">

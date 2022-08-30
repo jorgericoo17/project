@@ -19,7 +19,7 @@
         <fieldset>
             <legend th:text="#{user.list.legend}"></legend>
             <div class="row" th:if="${sellsList != null}">
-                <div class="col-xs-12 table-responsive mt-3" id="userList">
+                <div class="col-xs-12 table-responsive mt-3" id="sellList">
 
                     <div th:include="/common/alertMessages-fragment"></div>
 
@@ -29,8 +29,10 @@
                             <th id="cellSellsNewVehicle" class="text-center" th:text="#{model.list.name}" data-toogle="tooltip" th:title="#{model.list.name.sort}"></th>
                             <th id="cellSellsSeller" class="text-center" th:text="#{sells.seller.name}" data-toogle="tooltip" th:title="#{sells.seller.name.sort}"></th>
                             <th id="cellSellsProfit" class="text-center" th:text="#{sells.sell.profit}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
+                            <th id="cellSellsBuyerName" class="text-center" th:text="#{sells.buyer.name}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
+                            <th id="cellSellsBuyerDni" class="text-center" th:text="#{sells.buyer.dni}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
                             <th id="cellConfigurationUserEdit" class="text-center" th:text="#{table.header.edit}"></th>
-                            <th id="cellConfigurationUserDelete" class="text-center" th:text="#{table.header.delete}"></th>
+                            <th sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" id="cellConfigurationUserDelete" class="text-center" th:text="#{table.header.delete}"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,12 +40,14 @@
                             <td headers="cellSellsNewVehicle" class="text-center align-center-vertical" th:text="${row.newVehicle.model.toString()}"></td>
                             <td headers="cellSellsSeller" class="text-center align-center-vertical" th:text="|${row.seller.name} ${row.seller.lastName}|"></td>
                             <td headers="cellSellsProfit" class="text-center align-center-vertical" th:text="${row.profit}"></td>
+                            <td headers="cellSellsBuyerName" class="text-center align-center-vertical" th:text="${row.buyerName}"></td>
+                            <td headers="cellSellsBuyerDni" class="text-center align-center-vertical" th:text="${row.buyerDni}"></td>
                             <td headers="cellConfigurationUserEdit" class="text-center align-center-vertical">
                                 <a th:href="@{/sells/edit/{idSell}(idSell=${row.idSell})}">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </a>
                             </td>
-                            <td headers="cellConfigurationUserDelete" class="text-center align-center-vertical">
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" headers="cellConfigurationUserDelete" class="text-center align-center-vertical">
                                 <a th:href="@{/sells/delete/{idSell}(idSell=${row.idSell})}">
                                     <i class="fa fa-trash"></i>
                                 </a>
@@ -53,12 +57,19 @@
                     </table>
                 </div>
             </div>
+            <div class="pull-right mt-4">
+                <a id="buttonBack" th:href="@{/configuration/users/list}" data-toggle="tooltip" class="btn btn-primary m-b-5">
+                    <span class="fa fa-arrow-left"></span>
+                    <span th:text="#{button.back}"></span>
+                </a>
+            </div>
         </fieldset>
     </div>
 </main>
 </body>
 <script src="/js/languageSelector.js" th:src="@{/js/languageSelector.js}"></script>
 <script src="/js/asideMenu.js" th:src="@{/js/asideMenu.js}"></script>
+<script src="/js/buttonBack.js" th:src="@{/js/buttonBack.js}"></script>
 <script>
     $(document).ready(function () {
         let language = '//cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json';

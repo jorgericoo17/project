@@ -18,7 +18,7 @@
             <legend th:text="#{user.add.legend}"></legend>
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12 form-group mt-2">
-                    <form class="was-validated" th:action="@{/sells/save}" th:object="${sellDTO}" method="POST">
+                    <form class="was-validated" th:action="${savePath}" th:object="${sellDTO}" method="POST">
                         <input type="hidden" name="seller" th:value="${seller.idUser}">
                         <input type="hidden" name="newVehicle" th:value="${newVehicle.idNewVehicle}">
                         <div class="row">
@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                                 <label class="form-label" for="buyerDni"> Dni comprador</label>
-                                <input type="text" class="form-control" th:field="*{buyerDni}" required>
+                                <input type="text" maxlength=9 class="form-control" th:field="*{buyerDni}" required>
                             </div>
                         </div>
                         <div class="pull-right mt-4">
