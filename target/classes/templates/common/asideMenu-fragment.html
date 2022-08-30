@@ -27,7 +27,7 @@
                 <div class="nav_list">
                     <a th:href="@{/home}" class="nav_link" th:classappend="${navLink} == 'home' ? 'active' : ''">
                         <i class="fa fa-home" aria-hidden="true"></i>
-                        <span th:text="#{aside.menu.inicio}" class="nav_name"></span>
+                        <span th:text="#{aside.menu.inicio}" class="nav_name ms-1"></span>
                     </a>
                     <a th:href="@{/vehicles/newVehicle/list}" class="nav_link" th:classappend="${navLink} == 'vehicles' ? 'active' : ''">
                         <i class="fa fa-car" aria-hidden="true"></i>
@@ -35,15 +35,15 @@
                     </a>
                     <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" th:href="@{/sells}" class="nav_link" th:classappend="${navLink} == 'sell' ? 'active' : ''">
                         <i class="fa fa-euro" aria-hidden="true"></i>
-                        <span th:text="#{aside.menu.sells}" class="nav_name"></span>
+                        <span th:text="#{aside.menu.sells}" class="nav_name ms-1"></span>
                     </a>
                     <a sec:authorize="hasRole('ROLE_SELLER')" th:href="@{/sells/user}" class="nav_link" th:classappend="${navLink} == 'sell' ? 'active' : ''">
                         <i class="fa fa-euro" aria-hidden="true"></i>
-                        <span th:text="#{aside.menu.sells}" class="nav_name"></span>
+                        <span th:text="#{aside.menu.sells}" class="nav_name ms-1"></span>
                     </a>
                     <a th:href="@{/configuration}" class="nav_link" th:classappend="${navLink} == 'configuration' ? 'active' : ''">
                         <i class="fa fa-cog" aria-hidden="true"></i>
-                        <span th:text="#{aside.menu.configuracion}" class="nav_name"></span>
+                        <span th:text="#{aside.menu.configuracion}" class="nav_name ms-1"></span>
                     </a>
                 </div>
             </div>
