@@ -35,11 +35,6 @@ public class Sell implements Serializable {
     @Column(name = "PROFIT")
     private Double profit;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Temporal(TemporalType.DATE)
-    @Column(name = "DATE")
-    private Date date;
-
     @NotNull
     @ManyToOne
     @JoinColumn(name = "IDSELLER")

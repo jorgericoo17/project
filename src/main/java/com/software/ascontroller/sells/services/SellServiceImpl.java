@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,6 +32,11 @@ public class SellServiceImpl implements SellService{
     }
 
     @Override
+    public Optional<Sell> findById(Long idSell) {
+        return this.sellRepository.findById(idSell);
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public Sell save(Sell sell) {
         return this.sellRepository.save(sell);
@@ -42,12 +48,18 @@ public class SellServiceImpl implements SellService{
     }
 
     @Override
+    @Transactional(readOnly = false)
+    public void delete(Sell sell) {
+        this.sellRepository.delete(sell);
+    }
+
+    @Override
     public void deleteByIdNewVehicle(Long idNewVehicle) {
         this.sellRepository.deleteByIdNewVehicle(idNewVehicle);
     }
 
     @Override
-    public Sell findByIdUser(Long idUser) {
-        return null;
+    public List<Sell> findByIdUser(Long idUser) {
+        return this.sellRepository.findBySellerIdUser(idUser);
     }
 }

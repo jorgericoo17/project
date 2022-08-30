@@ -77,6 +77,34 @@ public class SellController {
         return "redirect:/sells";
     }
 
+    @PostMapping("/save/user")
+    public String saveSellUser(Model model,
+                           @ModelAttribute("sellDTO") SellDTO sellDTO,
+                           RedirectAttributes ra) {
+        Sell sell = this.sellService.getSellFromDTO(sellDTO);
+        NewVehicle newVehicle = this.newVehicleService.findById(sellDTO.getNewVehicle().getIdNewVehicle()).get();
+        Status status = statusService.findById(StatusEnum.VENDIDO.getIdStatus()).get();
+        newVehicle.setStatus(status);
+        Sell sellSaved = this.sellService.save(sell);
+        ra.addFlashAttribute("messageOK","Se ha guardado la venta del veículo "+sell.getNewVehicle().getModel().toString());
+
+        return "redirect:/sells/user";
+    }
+
+    @GetMapping("/delete/{idSell}")
+    public String deleteSell(Model model,
+                             @PathVariable("idSell") Long idSell,
+                             RedirectAttributes ra) {
+
+        Sell sell = this.sellService.findById(idSell).get();
+        NewVehicle newVehicle = this.newVehicleService.findById(sell.getNewVehicle().getIdNewVehicle()).get();
+        Status status = this.statusService.findById(StatusEnum.DISPONIBLE.getIdStatus()).get();
+        newVehicle.setStatus(status);
+        this.sellService.delete(sell);
+        ra.addFlashAttribute("messageOK", "Se ha borrado la venta");
+        return "redirect:/sells";
+    }
+
     private void loadAddSellScreen(Model model,
                               Long idNewVehicle,
                               Authentication authentication) {
@@ -92,6 +120,7 @@ public class SellController {
 
         model.addAttribute("sellsList",this.sellService.findAll());
         this.loadCommonAtributtesNavbar(model, authentication);
+        this.showAlertMessages(model);
 
     }
 
