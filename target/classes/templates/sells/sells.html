@@ -31,7 +31,6 @@
                             <th id="cellSellsProfit" class="text-center" th:text="#{sells.sell.profit}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
                             <th id="cellSellsBuyerName" class="text-center" th:text="#{sells.buyer.name}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
                             <th id="cellSellsBuyerDni" class="text-center" th:text="#{sells.buyer.dni}" data-toogle="tooltip" th:title="#{sells.sell.profit.sort}"></th>
-                            <th id="cellConfigurationUserEdit" class="text-center" th:text="#{table.header.edit}"></th>
                             <th sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" id="cellConfigurationUserDelete" class="text-center" th:text="#{table.header.delete}"></th>
                         </tr>
                         </thead>
@@ -42,11 +41,6 @@
                             <td headers="cellSellsProfit" class="text-center align-center-vertical" th:text="${row.profit}"></td>
                             <td headers="cellSellsBuyerName" class="text-center align-center-vertical" th:text="${row.buyerName}"></td>
                             <td headers="cellSellsBuyerDni" class="text-center align-center-vertical" th:text="${row.buyerDni}"></td>
-                            <td headers="cellConfigurationUserEdit" class="text-center align-center-vertical">
-                                <a th:href="@{/sells/edit/{idSell}(idSell=${row.idSell})}">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                </a>
-                            </td>
                             <td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" headers="cellConfigurationUserDelete" class="text-center align-center-vertical">
                                 <a th:href="@{/sells/delete/{idSell}(idSell=${row.idSell})}">
                                     <i class="fa fa-trash"></i>
